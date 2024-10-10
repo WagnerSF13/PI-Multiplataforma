@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:semeador/MenuInicial.dart';
+import 'package:semeador/Placar.dart';
 import 'NomesPath.dart';
+
+enum FuncaoBotao{
+  telaMenuInicial, telaPlacar
+}
 
 class BotaoAnimado extends StatefulWidget{
   final String svgPath;
   final Color corSombra;
   final Color corBotao;
-  const BotaoAnimado({super.key, required this.svgPath, required this.corBotao, required this.corSombra});
+  final FuncaoBotao operacaoBotao;
+  const BotaoAnimado({super.key, required this.svgPath, required this.corBotao, required this.corSombra, required this.operacaoBotao});
 
   @override
   State<StatefulWidget> createState() {
@@ -40,6 +47,7 @@ Widget build(BuildContext context) {
          setState(() {
            _position = 4;
          });
+        mudarTela(widget.operacaoBotao);
        },
        onTapDown: (_) {
          setState(() {
@@ -89,4 +97,15 @@ Widget build(BuildContext context) {
      ),
    );
 }
+
+  void mudarTela(FuncaoBotao operacaoBotao){
+    switch(operacaoBotao){
+      case FuncaoBotao.telaMenuInicial:
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MenuInicial() ));
+      case FuncaoBotao.telaPlacar:
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Placar(pontos: 3) ));
+      default:
+        return;
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:semeador/utils/BotaoAnimado.dart';
 import 'package:semeador/utils/CoresCustomizadas.dart';
+import 'package:semeador/utils/TextoCustomizado.dart';
 import 'utils/NomesPath.dart';
 
 class MenuInicial extends StatelessWidget{
@@ -8,12 +9,21 @@ class MenuInicial extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    final tamanhoGap = MediaQuery.of(context).size.height * 0.3;
+    return MaterialApp(
       home: Scaffold(
         body: Stack(
           children: [
             Expanded(child: ImagemFundo()),
-            BotaoAnimado(svgPath: NomesPath.play, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra),
+            Center(
+              child: Column(
+                children: [
+                  SizedBox(height: tamanhoGap),
+                  BotaoAnimado(svgPath: NomesPath.play, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra, operacaoBotao: FuncaoBotao.telaPlacar),
+                  TextoCustomizado(texto: "JOGAR")
+              ],
+            ),
+            )
           ],
         ),
       )
