@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class TextoCustomizado extends StatelessWidget{
   final String texto;
-  const TextoCustomizado({super.key, required this.texto});
+  final double escalaTamanho;
+  const TextoCustomizado({super.key, required this.texto, this.escalaTamanho = 0.1});
 
   final String fontFamily = 'Chubby Cheeks';
   
@@ -11,7 +12,7 @@ class TextoCustomizado extends StatelessWidget{
   final double largura = MediaQuery.of(context).size.width;
   final double altura = MediaQuery.of(context).size.height;
 
-  final fontSize = (largura * 0.1 + altura * 0.1) / 2;
+  final fontSize = (largura * escalaTamanho + altura * escalaTamanho) / 2;
     return  Stack(
               // Stroke do texto
               alignment: Alignment.center,

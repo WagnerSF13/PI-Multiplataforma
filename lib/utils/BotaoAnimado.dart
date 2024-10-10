@@ -13,7 +13,8 @@ class BotaoAnimado extends StatefulWidget{
   final Color corSombra;
   final Color corBotao;
   final FuncaoBotao operacaoBotao;
-  const BotaoAnimado({super.key, required this.svgPath, required this.corBotao, required this.corSombra, required this.operacaoBotao});
+  final double escalaTamanho;
+  const BotaoAnimado({super.key, required this.svgPath, required this.corBotao, required this.corSombra, required this.operacaoBotao, this.escalaTamanho = 0.1});
 
   @override
   State<StatefulWidget> createState() {
@@ -31,8 +32,8 @@ Widget build(BuildContext context) {
   final double altura = MediaQuery.of(context).size.height;
 
   final String path;
-  final tamanho = (largura * 0.1 + altura * 0.1) / 2;
-  final tamanhoIcones = (largura * 0.04 + altura * 0.04) / 2;
+  final tamanho = (largura * widget.escalaTamanho + altura * widget.escalaTamanho) / 2;
+  final tamanhoIcones = (largura * ( (widget.escalaTamanho / 10) * 4 ) + altura * ( (widget.escalaTamanho / 10) * 4 )) / 2;
   if (widget.svgPath == ""){
     path = NomesPath.play;
   }

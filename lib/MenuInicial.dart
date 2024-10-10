@@ -9,7 +9,7 @@ class MenuInicial extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    final tamanhoGap = MediaQuery.of(context).size.height * 0.3;
+    final tamanhoGap = MediaQuery.of(context).size.height * 0.2;
     return MaterialApp(
       home: Scaffold(
         body: Stack(
@@ -19,8 +19,8 @@ class MenuInicial extends StatelessWidget{
               child: Column(
                 children: [
                   SizedBox(height: tamanhoGap),
-                  BotaoAnimado(svgPath: NomesPath.play, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra, operacaoBotao: FuncaoBotao.telaPlacar),
-                  TextoCustomizado(texto: "JOGAR")
+                  BotaoAnimado(svgPath: NomesPath.play, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra, operacaoBotao: FuncaoBotao.telaPlacar, escalaTamanho: 0.2),
+                  TextoCustomizado(texto: "JOGAR", escalaTamanho: 0.09)
               ],
             ),
             )
