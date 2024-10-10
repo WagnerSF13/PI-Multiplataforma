@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'NomesPath.dart';
 
 class BotaoAnimado extends StatefulWidget{
   final String svgPath;
@@ -19,15 +20,20 @@ double _position = 4;
 
 @override
 Widget build(BuildContext context) {
+  final double largura = MediaQuery.of(context).size.width;
+  final double altura = MediaQuery.of(context).size.height;
+
   final String path;
+  final tamanho = (largura * 0.1 + altura * 0.1) / 2;
+  final tamanhoIcones = (largura * 0.04 + altura * 0.04) / 2;
   if (widget.svgPath == ""){
-    path = "../assets/play.svg";
+    path = NomesPath.play;
   }
   else{
     path = widget.svgPath;
   }
 
- final double _height = 64 - _shadowHeight;
+ final double _height = tamanho - _shadowHeight;
  return Center(
      child: GestureDetector(
        onTapUp: (_) {
@@ -47,14 +53,14 @@ Widget build(BuildContext context) {
        },
        child: Container(
          height: _height + _shadowHeight,
-         width: 200,
+         width: tamanho,
          child: Stack(
            children: [
              Positioned(
                bottom: 0,
                child: Container(
                  height: _height,
-                 width: 200,
+                 width: tamanho,
                  decoration: BoxDecoration(
                    color: widget.corSombra,
                    shape: BoxShape.circle,
@@ -67,13 +73,13 @@ Widget build(BuildContext context) {
                duration: Duration(milliseconds: 70),
                child: Container(
                  height: _height,
-                 width: 200,
+                 width: tamanho,
                  decoration: BoxDecoration(
                    color: widget.corBotao,
                    shape: BoxShape.circle,
                  ),
                  child: Center(
-                   child: SvgPicture.asset(path)
+                   child: SvgPicture.asset(path, width: tamanhoIcones, height: tamanhoIcones)
                  ),
                ),
              ),

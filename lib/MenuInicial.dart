@@ -1,4 +1,7 @@
 import "package:flutter/material.dart";
+import 'package:semeador/utils/BotaoAnimado.dart';
+import 'package:semeador/utils/CoresCustomizadas.dart';
+import 'utils/NomesPath.dart';
 
 class MenuInicial extends StatelessWidget{
   const MenuInicial({super.key});
@@ -10,7 +13,7 @@ class MenuInicial extends StatelessWidget{
         body: Stack(
           children: [
             Expanded(child: ImagemFundo()),
-            BotaoJogar(),
+            BotaoAnimado(svgPath: NomesPath.play, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra),
           ],
         ),
       )
@@ -18,34 +21,6 @@ class MenuInicial extends StatelessWidget{
   }
 }
 
-class BotaoJogar extends StatelessWidget{
-  const BotaoJogar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          boxShadow: [BoxShadow(
-            color: Colors.amber.shade800,
-            offset: const Offset(1, 5),
-            spreadRadius: 1,
-          )],
-        ),
-        child: ElevatedButton(
-          style: const ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll<Color>(Colors.amber),
-            iconSize: WidgetStatePropertyAll(100.0),
-            shape: WidgetStatePropertyAll(CircleBorder())
-          ),
-          onPressed: (){},
-          child: const Icon(Icons.play_arrow),
-        ),
-      )
-    );
-  }
-}
 
 class ImagemFundo extends StatelessWidget{
   const ImagemFundo({super.key});
@@ -57,7 +32,7 @@ class ImagemFundo extends StatelessWidget{
       height: double.infinity,
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("../../images/FundoMenuInicial.png"),
+          image: AssetImage(NomesPath.menuInicial),
           fit: BoxFit.cover,
         ),
       ),
