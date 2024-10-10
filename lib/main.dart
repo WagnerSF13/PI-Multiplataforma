@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:semeador/MenuInicial.dart';
 import 'package:semeador/Placar.dart';
+import 'package:flutter/services.dart';
 
 void main() {
-  //runApp(Placar(pontos: 3));
+   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+ ));
   runApp(MenuInicial());
 }

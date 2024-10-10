@@ -15,15 +15,16 @@ class Placar extends StatelessWidget{
         backgroundColor: CoresCustomizadas.azul,
         body: Column(
           children: [
-            TextoCustomizado(texto: "Parabéns!"),
-            TextoCustomizado(texto: "$pontos"),
+            SizedBox(height: MediaQuery.of(context).size.width * 0.04),
+            TextoCustomizado(texto: "Parabéns!", escalaTamanho: 0.15),
+            TextoCustomizado(texto: "$pontos", escalaTamanho: 0.15),
             Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  BotaoAnimado(svgPath: NomesPath.play, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra, operacaoBotao: FuncaoBotao.telaMenuInicial),
-                  SizedBox(width: MediaQuery.of(context).size.width * 0.05),
-                  BotaoAnimado(svgPath: NomesPath.menu, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra, operacaoBotao: FuncaoBotao.telaMenuInicial)
+                  BotaoAnimado(svgPath: NomesPath.play, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra, operacaoBotao: FuncaoBotao.telaMenuInicial, escalaTamanho: 0.15),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.1),
+                  BotaoAnimado(svgPath: NomesPath.menu, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra, operacaoBotao: FuncaoBotao.telaMenuInicial, escalaTamanho: 0.15)
                 ],
               ),
             )
