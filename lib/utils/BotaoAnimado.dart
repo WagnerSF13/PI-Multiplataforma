@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:semeador/JogoMemoria.dart';
 import 'package:semeador/MenuInicial.dart';
 import 'package:semeador/Placar.dart';
 import 'NomesPath.dart';
 
 enum FuncaoBotao{
-  telaMenuInicial, telaPlacar
+  telaMenuInicial, telaPlacar, telaJogoMemoria
 }
 
 class BotaoAnimado extends StatefulWidget{
@@ -105,6 +106,8 @@ Widget build(BuildContext context) {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MenuInicial() ));
       case FuncaoBotao.telaPlacar:
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Placar(pontos: 3) ));
+      case FuncaoBotao.telaJogoMemoria:
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => JogoMemoria() ));
       default:
         return;
     }
