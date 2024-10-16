@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:semeador/utils/NomesPath.dart';
+import 'utils/NomesPath.dart';
 
 class JogoMemoria extends StatefulWidget{
-  const JogoMemoria({super.key});
-
   @override
   State<StatefulWidget> createState() {
     return JogoMemoriaState();
@@ -11,44 +9,69 @@ class JogoMemoria extends StatefulWidget{
 }
 
 class JogoMemoriaState extends State<JogoMemoria>{
-  final List<String> imagens = NomesPath.letras;
-  final tamanhoJogo = 2;
+    final int tamanhoLinha = 4;
+    final int tamanhoColuna = 3;
+
+    late List<List<String>> listaCartas;
+    late List<List<String>> listaImagens;
+
+
+    List<List<String>> gerarCartas(){
+      return List.generate(tamanhoLinha, (i) => List.filled(tamanhoColuna, NomesPath.escondido));
+    }
+
+    List<List<String>> gerarImagens(){
+      List<String> alfabeto = NomesPath.letras;
+      alfabeto.shuffle();
+      int contador = 0;
+      List<List<String>> listaImagens = List.generate(tamanhoLinha, (i) => List.filled(tamanhoColuna, ""));
+      for (int linha = 0; linha < tamanhoLinha; linha++){
+        for (int coluna = 0; coluna < tamanhoColuna; coluna++){
+          listaImagens[linha][coluna] = alfabeto[contador++];
+        }
+      }
+      return listaImagens;
+    }
+    @override
+    void initState(){
+      listaCartas = gerarCartas();
+      listaImagens = gerarImagens();
+    }
+    
+
+    void clicouCarta(int linha, int coluna){
+      setState(() {
+        if (listaCartas[linha][coluna] == listaImagens[linha][coluna]){
+          listaCartas[linha][coluna] = NomesPath.escondido;
+        }
+        else{
+          listaCartas[linha][coluna] = listaImagens[linha][coluna];
+        }
+      });
+    }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         body: GridView.builder(
-          itemCount: imagens.length,
-          itemBuilder: (BuildContext context, int index){
-            return CartaJogo(pathImagem: imagens[index]);
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: tamanhoColuna),
+          itemCount: tamanhoLinha * tamanhoColuna,
+          itemBuilder: (context, index){
+            int linha = index ~/ tamanhoColuna;
+            int coluna = index % tamanhoColuna;
+            return GestureDetector(
+              onTap: () => clicouCarta(linha, coluna),
+              child: Card(
+                child: Center(
+                  child: listaCartas[linha][coluna] == NomesPath.escondido ?
+                    Image.asset(listaImagens[linha][coluna], fit: BoxFit.cover) :
+                    Image.asset(listaImagens[linha][coluna], fit: BoxFit.cover)
+                  ),
+                )
+              );
           },
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: tamanhoJogo),
-        )
+        ),
       ),
-    );
-  }
-}
-
-class CartaJogo extends StatefulWidget{
-  final String pathImagem;
-  const CartaJogo({super.key, required this.pathImagem});
-
-  @override
-  State<StatefulWidget> createState() {
-    return CartaJogoState();
-  }
-}
-
-class CartaJogoState extends State<CartaJogo>{
-  bool clicou = false;
-  @override
-  Widget build(BuildContext context) {
-    String imagem = clicou == true ? widget.pathImagem : NomesPath.cartaAtras;
-    return IconButton(
-      onPressed: (){setState(() {
-        clicou = !clicou;
-      });},
-      icon: Image.asset(imagem)
     );
   }
 }

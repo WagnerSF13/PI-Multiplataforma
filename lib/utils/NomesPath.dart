@@ -5,14 +5,14 @@ class NomesPath {
   static const String menuInicial = "assets/FundoMenuInicial.png";
 
 
-
   // Jogo da memoria
-  static const String cartaAtras = "assets/cartaAtras.png";
+  static const String escondido = "assets/escondido.png";
+  static const String letraA = "assets/A.png";
+  static const String letraB = "assets/B.png";
+  static const String letraC = "assets/C.png";
+  static const String letraD = "assets/D.png";
+  static const String letraF = "assets/F.png";
+  static const String letraG = "assets/G.png";
 
-  static const String letraA = "assets/letraA.png";
-  static const String letraB = "assets/letraB.png";
-  static const String letraC = "assets/letraC.png";
-  static const String letraD = "assets/letraD.png";
-
-  static const List<String> letras = [letraA, letraB, letraC, letraD];
+  static const List<String> letras = [letraA, letraB, letraC, letraD, letraF, letraG];
 }
