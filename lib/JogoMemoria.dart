@@ -21,7 +21,12 @@ class JogoMemoriaState extends State<JogoMemoria>{
     }
 
     List<List<String>> gerarImagens(){
-      List<String> alfabeto = NomesPath.letras;
+      List<String> alfabeto = List.from(NomesPath.letras);
+      //duplicar a litsa pois precisa de pares
+      for (int i = 0; i < NomesPath.letras.length; i++){
+        alfabeto.add(alfabeto[i]);
+      }
+
       alfabeto.shuffle();
       int contador = 0;
       List<List<String>> listaImagens = List.generate(tamanhoLinha, (i) => List.filled(tamanhoColuna, ""));
@@ -64,7 +69,7 @@ class JogoMemoriaState extends State<JogoMemoria>{
               child: Card(
                 child: Center(
                   child: listaCartas[linha][coluna] == NomesPath.escondido ?
-                    Image.asset(listaImagens[linha][coluna], fit: BoxFit.cover) :
+                    Image.asset(NomesPath.escondido, fit: BoxFit.cover) :
                     Image.asset(listaImagens[linha][coluna], fit: BoxFit.cover)
                   ),
                 )
