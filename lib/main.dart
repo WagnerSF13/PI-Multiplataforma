@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:semeador/MenuInicial.dart';
-import 'package:semeador/Placar.dart';
 import 'package:flutter/services.dart';
 
 void main() {

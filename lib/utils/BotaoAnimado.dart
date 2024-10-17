@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:semeador/JogoMemoria.dart';
-import 'package:semeador/MenuInicial.dart';
-import 'package:semeador/Placar.dart';
+import 'package:semeador/utils/Navegacao.dart';
 import 'NomesPath.dart';
 
-enum FuncaoBotao{
-  telaMenuInicial, telaPlacar, telaJogoMemoria
-}
 
 class BotaoAnimado extends StatefulWidget{
   final String svgPath;
@@ -49,7 +44,7 @@ Widget build(BuildContext context) {
          setState(() {
            _position = 4;
          });
-        mudarTela(widget.operacaoBotao);
+        Navegacao.mudarTela(widget.operacaoBotao, context);
        },
        onTapDown: (_) {
          setState(() {
@@ -100,16 +95,4 @@ Widget build(BuildContext context) {
    );
 }
 
-  void mudarTela(FuncaoBotao operacaoBotao){
-    switch(operacaoBotao){
-      case FuncaoBotao.telaMenuInicial:
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MenuInicial() ));
-      case FuncaoBotao.telaPlacar:
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Placar(pontos: 3) ));
-      case FuncaoBotao.telaJogoMemoria:
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => JogoMemoria() ));
-      default:
-        return;
-    }
-  }
 }

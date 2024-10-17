@@ -3,6 +3,7 @@ import 'utils/BotaoAnimado.dart';
 import 'utils/CoresCustomizadas.dart';
 import 'utils/NomesPath.dart';
 import 'utils/TextoCustomizado.dart';
+import 'package:semeador/utils/Navegacao.dart';
 
 class Placar extends StatelessWidget{
   final int pontos;
