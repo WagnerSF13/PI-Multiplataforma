@@ -12,8 +12,8 @@ class JogoMemoria extends StatefulWidget{
 }
 
 class JogoMemoriaState extends State<JogoMemoria>{
-    final int tamanhoLinha = 4;
-    final int tamanhoColuna = 3;
+    final int tamanhoLinha = 2;
+    final int tamanhoColuna = 5;
 
     late List<List<String>> listaCartas;
     late List<List<String>> listaImagens;
@@ -32,8 +32,13 @@ class JogoMemoriaState extends State<JogoMemoria>{
 
     List<List<String>> gerarImagens(){
       List<String> alfabeto = List.from(NomesPath.letras);
+      alfabeto.shuffle();
+      while (alfabeto.length > ( (tamanhoColuna * tamanhoLinha) / 2) ) {
+        alfabeto.removeLast();
+      }
+      final numeroLetras = alfabeto.length;
       //duplicar a litsa pois precisa de pares
-      for (int i = 0; i < NomesPath.letras.length; i++){
+      for (int i = 0; i < numeroLetras; i++){
         alfabeto.add(alfabeto[i]);
       }
 
