@@ -96,6 +96,7 @@ class JogoMemoriaState extends State<JogoMemoria>{
                 ultimaCarta.add(linha);
                 ultimaCarta.add(coluna);
                 errou = true;
+                // TODO deixar o card vermelho nas 2 cartas erradas
               }
               
             } 
@@ -118,6 +119,7 @@ class JogoMemoriaState extends State<JogoMemoria>{
             return GestureDetector(
               onTap: () => clicouCarta(linha, coluna),
               child: Card(
+                color: veficiarErro(linha, coluna) ? Colors.red : verificaCerto(linha, coluna) ? Colors.green : Colors.white, 
                 child: Center(
                   child: listaCartas[linha][coluna] == NomesPath.escondido ?
                     Image.asset(NomesPath.escondido, fit: BoxFit.cover) :
@@ -129,5 +131,18 @@ class JogoMemoriaState extends State<JogoMemoria>{
         ),
       ),
     );
+  }
+
+  bool veficiarErro(int linha, int coluna){
+    if (ultimaCarta.length == 4){
+      if ( (linha == ultimaCarta[0] && coluna == ultimaCarta[1]) || (linha == ultimaCarta[2] && coluna == ultimaCarta[3])){
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool verificaCerto(int linha, int coluna){
+    return cartasCertas[linha][coluna];
   }
 }
