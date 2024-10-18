@@ -19,6 +19,7 @@ class JogoMemoriaState extends State<JogoMemoria>{
     late List<List<String>> listaImagens;
 
     final List<int> ultimaCarta = [];
+    bool errou = false;
 
     late List<List<bool>> cartasCertas = List.generate(tamanhoLinha, (i) => List.filled(tamanhoColuna, false) );
 
@@ -61,6 +62,12 @@ class JogoMemoriaState extends State<JogoMemoria>{
 
     void clicouCarta(int linha, int coluna){
       setState(() {
+        if (errou){
+          listaCartas[ultimaCarta[0]][ultimaCarta[1]] = NomesPath.escondido;
+          listaCartas[ultimaCarta[2]][ultimaCarta[3]] = NomesPath.escondido;
+          errou = false;
+          ultimaCarta.clear();  
+        }
         if (cartasCertas[linha][coluna]){ // Se ja estiver certa, faz nada
           return;
         }
@@ -73,22 +80,26 @@ class JogoMemoriaState extends State<JogoMemoria>{
           listaCartas[linha][coluna] = listaImagens[linha][coluna];
             if (linha == ultimaCarta[0] && coluna == ultimaCarta[1]){ // se for a mesma carta que antes, desvira
               listaCartas[linha][coluna] = NomesPath.escondido;
+              ultimaCarta.clear();  
             }
             else{ // se for outra carta
               if (listaImagens[linha][coluna] == listaImagens[ultimaCarta[0]][ultimaCarta[1]]){ // se for a mesma imagem
                 cartasCertas[linha][coluna] = true;
                 cartasCertas[ultimaCarta[0]][ultimaCarta[1]] = true;
+                ultimaCarta.clear();  
                 if (ganhou()){
                   Navegacao.mudarTela(FuncaoBotao.telaPlacar, context);
                 }
               }
               else{ // errou
-                listaCartas[linha][coluna] = NomesPath.escondido;
-                listaCartas[ultimaCarta[0]][ultimaCarta[1]] = NomesPath.escondido;
+                listaCartas[linha][coluna] = listaImagens[linha][coluna];
+                ultimaCarta.add(linha);
+                ultimaCarta.add(coluna);
+                errou = true;
               }
               
             } 
-          ultimaCarta.clear();  
+          //ultimaCarta.clear();  
         }
       });
     }
