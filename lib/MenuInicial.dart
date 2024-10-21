@@ -15,12 +15,12 @@ class MenuInicial extends StatelessWidget{
       home: Scaffold(
         body: Stack(
           children: [
-            Expanded(child: ImagemFundo()),
+            ImagemFundo(),
             Center(
               child: Column(
                 children: [
                   SizedBox(height: tamanhoGap),
-                  BotaoAnimado(svgPath: NomesPath.play, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra, operacaoBotao: FuncaoBotao.telaJogoMemoria, escalaTamanho: 0.2),
+                  BotaoAnimado(svgPath: NomesPath.play, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra, operacaoBotao: FuncaoBotao.telaJogoMetadinha, escalaTamanho: 0.2),
                   TextoCustomizado(texto: "JOGAR", escalaTamanho: 0.09)
               ],
             ),

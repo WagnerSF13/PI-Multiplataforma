@@ -96,11 +96,9 @@ class JogoMemoriaState extends State<JogoMemoria>{
                 ultimaCarta.add(linha);
                 ultimaCarta.add(coluna);
                 errou = true;
-                // TODO deixar o card vermelho nas 2 cartas erradas
               }
               
-            } 
-          //ultimaCarta.clear();  
+            }  
         }
       });
     }

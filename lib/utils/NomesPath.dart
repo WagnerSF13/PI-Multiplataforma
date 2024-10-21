@@ -14,5 +14,22 @@ class NomesPath {
   static const String letraF = "assets/F.png";
   static const String letraG = "assets/G.png";
 
+  static const String letraAcerto = "assets/Acerto.png";
+  static const String letraBcerto = "assets/Bcerto.png";
+  static const String letraCcerto = "assets/Ccerto.png";
+  static const String letraDcerto = "assets/Dcerto.png";
+  static const String letraFcerto = "assets/Fcerto.png";
+  static const String letraGcerto = "assets/Gcerto.png";
+
   static const List<String> letras = [letraA, letraB, letraC, letraD, letraF, letraG];
+
+  static const List<String> letrasCerto = [letraAcerto, letraBcerto, letraCcerto, letraDcerto, letraFcerto, letraGcerto];
+
+  static List<String> gerarLetrasCorretas(List<String> letrasGeradas){
+    final List<String> letrasCorretas = [];
+    for (int i = 0; i < letrasGeradas.length; i++){
+      letrasCorretas.add(letrasGeradas[i].replaceAll(".png", "") + "certo.png");
+    }
+    return letrasCorretas;
+  }
 }
