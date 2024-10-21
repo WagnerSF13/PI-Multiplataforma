@@ -23,9 +23,9 @@ class Placar extends StatelessWidget{
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  BotaoAnimado(svgPath: NomesPath.play, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra, operacaoBotao: FuncaoBotao.telaMenuInicial, escalaTamanho: 0.15),
-                  SizedBox(width: MediaQuery.of(context).size.width * 0.1),
-                  BotaoAnimado(svgPath: NomesPath.menu, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra, operacaoBotao: FuncaoBotao.telaMenuInicial, escalaTamanho: 0.15)
+                  //BotaoAnimado(svgPath: NomesPath.play, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra, operacaoBotao: FuncaoBotao.telaMenuInicial, escalaTamanho: 0.15),
+                  //SizedBox(width: MediaQuery.of(context).size.width * 0.1),
+                  BotaoAnimado(svgPath: NomesPath.menu, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra, operacaoBotao: FuncaoBotao.telaMenuJogos, escalaTamanho: 0.15)
                 ],
               ),
             )

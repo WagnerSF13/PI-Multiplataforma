@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:semeador/JogoMetadinha.dart';
 import 'package:semeador/MenuInicial.dart';
+import 'package:semeador/MenuJogos.dart';
 import 'package:semeador/Placar.dart';
 import 'package:semeador/JogoMemoria.dart';
 
 enum FuncaoBotao{
-  telaMenuInicial, telaPlacar, telaJogoMemoria, telaJogoMetadinha
+  telaMenuInicial, telaPlacar, telaJogoMemoria, telaJogoMetadinha, telaMenuJogos
 }
 
 class Navegacao {
@@ -20,6 +21,8 @@ class Navegacao {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => JogoMemoria() ));
       case FuncaoBotao.telaJogoMetadinha:
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => JogoMetadinha() ));
+      case FuncaoBotao.telaMenuJogos:
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MenuJogos() ));
       default:
         return;
     }
