@@ -11,6 +11,7 @@ class NomesPath {
   static const String letraB = "assets/B.png";
   static const String letraC = "assets/C.png";
   static const String letraD = "assets/D.png";
+  static const String letraE = "assets/E.png";
   static const String letraF = "assets/F.png";
   static const String letraG = "assets/G.png";
 
@@ -18,12 +19,13 @@ class NomesPath {
   static const String letraBcerto = "assets/Bcerto.png";
   static const String letraCcerto = "assets/Ccerto.png";
   static const String letraDcerto = "assets/Dcerto.png";
+  static const String letraEcerto = "assets/Ecerto.png";
   static const String letraFcerto = "assets/Fcerto.png";
   static const String letraGcerto = "assets/Gcerto.png";
 
-  static const List<String> letras = [letraA, letraB, letraC, letraD, letraF, letraG];
+  static const List<String> letras = [letraA, letraB, letraC, letraD, letraE, letraF, letraG];
 
-  static const List<String> letrasCerto = [letraAcerto, letraBcerto, letraCcerto, letraDcerto, letraFcerto, letraGcerto];
+  static const List<String> letrasCerto = [letraAcerto, letraBcerto, letraCcerto, letraDcerto, letraEcerto, letraFcerto, letraGcerto];
 
   static List<String> gerarLetrasCorretas(List<String> letrasGeradas){
     final List<String> letrasCorretas = [];
