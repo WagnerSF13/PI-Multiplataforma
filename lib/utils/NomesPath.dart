@@ -3,6 +3,7 @@ class NomesPath {
   static const String play = "assets/play.svg";
   static const String menu = "assets/menu.svg";
   static const String menuInicial = "assets/FundoMenuInicial.png";
+  static const String fundoEscondido = "assets/escondidoFundo.png";
 
   // Jogo da memoria
   static const String escondido = "assets/escondido.png";

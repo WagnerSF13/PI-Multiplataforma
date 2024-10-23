@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:semeador/utils/CardClicavel.dart";
+import "package:semeador/utils/CoresCustomizadas.dart";
 import "package:semeador/utils/ImagemFundo.dart";
 import "package:semeador/utils/Navegacao.dart";
 import "package:semeador/utils/NomesPath.dart";
@@ -37,7 +38,7 @@ class ListaDePerfil extends StatelessWidget{
                   onTap: () {
                     Navegacao.mudarTela(FuncaoBotao.telaMenuJogos, context);
                   },
-                  child: CardClicavel(imagemPath: NomesPath.escondido, operacaoBotao: FuncaoBotao.telaMenuJogos, texto: "Nome aluno") // Nome do aluno ou professor
+                  child: CardClicavel(imagemPath: NomesPath.escondido, operacaoBotao: FuncaoBotao.telaMenuJogos, texto: "Nome aluno", corCard: CoresCustomizadas.azulPerfil) // Nome do aluno ou professor
                 );
               },
             ),

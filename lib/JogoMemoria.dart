@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:semeador/utils/ImagemFundo.dart';
 import 'package:semeador/utils/Navegacao.dart';
 import 'utils/NomesPath.dart';
 
@@ -108,25 +107,30 @@ class JogoMemoriaState extends State<JogoMemoria>{
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: tamanhoColuna),
-          itemCount: tamanhoLinha * tamanhoColuna,
-          itemBuilder: (context, index){
-            int linha = index ~/ tamanhoColuna;
-            int coluna = index % tamanhoColuna;
-            return GestureDetector(
-              onTap: () => clicouCarta(linha, coluna),
-              child: Card(
-                color: veficiarErro(linha, coluna) ? Colors.red : verificaCerto(linha, coluna) ? Colors.green : Colors.white, 
-                child: Center(
-                  child: listaCartas[linha][coluna] == NomesPath.escondido ?
-                    Image.asset(NomesPath.escondido, fit: BoxFit.cover) :
-                    Image.asset(listaImagens[linha][coluna], fit: BoxFit.cover)
-                  ),
-                )
-              );
-          },
-        ),
+        body: Stack(
+          children: [
+            ImagemFundo(imagem: NomesPath.fundoEscondido),
+            GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: tamanhoColuna),
+              itemCount: tamanhoLinha * tamanhoColuna,
+              itemBuilder: (context, index){
+                int linha = index ~/ tamanhoColuna;
+                int coluna = index % tamanhoColuna;
+                return GestureDetector(
+                  onTap: () => clicouCarta(linha, coluna),
+                  child: Card(
+                    color: veficiarErro(linha, coluna) ? Colors.red : verificaCerto(linha, coluna) ? Colors.green : Colors.white, 
+                    child: Center(
+                      child: listaCartas[linha][coluna] == NomesPath.escondido ?
+                        Image.asset(NomesPath.escondido, fit: BoxFit.cover) :
+                        Image.asset(listaImagens[linha][coluna], fit: BoxFit.cover)
+                      ),
+                    )
+                  );
+              },
+            ),
+          ],
+        )
       ),
     );
   }

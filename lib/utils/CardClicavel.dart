@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import "package:semeador/utils/Navegacao.dart";
-import "package:semeador/utils/CoresCustomizadas.dart";
 import "package:semeador/utils/TextoCustomizado.dart";
 
 
