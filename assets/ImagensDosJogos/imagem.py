@@ -17,12 +17,17 @@ def gerarImagens(pathImagem, pathCerto):
     imagemBaixo = imagem.crop((0, 50, 100, 100))
     imagem.paste(certo, (0, 0), certo)
 
+    novaImagemCima = Image.new("RGBA", (100, 100), (0, 0, 0, 0))  # Transparente
+    novaImagemCima.paste(imagemCima, (0, 0))
+    novaImagemBaixo = Image.new("RGBA", (100, 100), (0, 0, 0, 0))  # Transparente
+    novaImagemBaixo.paste(imagemBaixo, (0, 0))
+
     nomeCima = nomeImagem + "Cima.png"
     nomeBaixo = nomeImagem + "Baixo.png"
     nomeCerto = nomeImagem + "Certo.png"
 
-    imagemCima.save(nomeCima)
-    imagemBaixo.save(nomeBaixo)
+    novaImagemCima.save(nomeCima)
+    novaImagemBaixo.save(nomeBaixo)
     imagem.save(nomeCerto)
 
     gerarCodigo(nomeImagem, nome100x100, nomeCima, nomeBaixo, nomeCerto)
@@ -39,7 +44,7 @@ def listarImagens():
 def gerarCodigo(nome, original, cima, baixo, certo):
     nomeSemExtensao = nome.replace(".png", "")
     nomeSemExtensao = nomeSemExtensao.replace(".PNG", "")
-    sufixo = "ImagensDosJogos/"
+    sufixo = "assets/ImagensDosJogos/"
     codigo = "// Codigo gerado automaticamente pelo script Python imagem.py\n"
     codigo += f"static const String {nomeSemExtensao} = \"{sufixo}{original}\";\n"
     codigo += f"static const String {nomeSemExtensao}Cima = \"{sufixo}{cima}\";\n"
