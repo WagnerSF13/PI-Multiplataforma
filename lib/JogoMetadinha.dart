@@ -64,7 +64,7 @@ class JogoMetadinhaState extends State<JogoMetadinha>{
               children: 
                 List.generate(tamanhoJogo, (contador) => soltarAqui(contador) ),
             ),
-            Spacer(),
+            Spacer(), // Separa para ficar uma linha no topo e outra no fim da tela
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: 
@@ -77,10 +77,11 @@ class JogoMetadinhaState extends State<JogoMetadinha>{
       );
   }
 
+  // Imagem em baixo que podem ser movidas
   Widget imagemMovivel(int posLista){
     return Padding(
         padding: EdgeInsets.all(8.0),
-        child: podeMover[posLista] == false ? null : Draggable<String>(
+        child: podeMover[posLista] == false ? null : Draggable<String>( // Caso ja genha sido encaixada, nao mostrar nada
             data: imagensMoveis[posLista],
             feedback: Image.asset(imagensMoveis[posLista]),
             childWhenDragging: Image.asset(imagensMoveis[posLista]),
@@ -89,6 +90,7 @@ class JogoMetadinhaState extends State<JogoMetadinha>{
       ); 
   }
 
+  // Imagens em cima que nao podem ser movidas
   Widget imagemFixa(int posLista){
     return Padding(
         padding: EdgeInsets.all(8.0),
@@ -96,24 +98,27 @@ class JogoMetadinhaState extends State<JogoMetadinha>{
       );
   }
 
+  // Cria o widget que permite mover a imagem para outro lugar
   Widget soltarAqui(int posLista){
     return DragTarget<String>(
         onAcceptWithDetails: (detalhes) {
-          if(detalhes.data == imagensUsadas[posLista][2]){
+          // Verifica se acertou
+          if(detalhes.data == imagensUsadas[posLista][2]){ // [2] pois eh a imagem de baixo
             setState(() {
-              for (int i = 0; i < imagensMoveis.length; i++){
+              // Remover imagem movivel que foi corretamente colocada
+              for (int i = 0; i < imagensMoveis.length; i++){ // i indica o indice das imagens moviveis
                 if (imagensMoveis[i] == imagensUsadas[posLista][2]){
-                  podeMover[i] = false;
+                  podeMover[i] = false; // Sinaliza para nao mostrar a parte de baixo da imagem ja completada
                   break;
                 }
               }
-              imagensFixas[posLista] = imagensCorretas[posLista];
+              imagensFixas[posLista] = imagensCorretas[posLista]; // Muda para a image correta 
             });
-            if (ganhou()){
+            if (ganhou()){ 
               Navegacao.mudarTela(FuncaoBotao.telaPlacar, context);
             }
           } 
-          else{
+          else{ // Caso arrastou a imagem errada
             print("Errou");
           }
           },

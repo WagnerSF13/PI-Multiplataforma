@@ -15,7 +15,7 @@ class MenuJogos extends StatelessWidget{
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CardClicavel(imagemPath: NomesPath.letraA, operacaoBotao: FuncaoBotao.telaJogoMetadinha, texto: "Metadinha"),
+                CardClicavel(imagemPath: NomesPath.abelha, operacaoBotao: FuncaoBotao.telaJogoMetadinha, texto: "Metadinha"),
                 CardClicavel(imagemPath: NomesPath.escondido, operacaoBotao: FuncaoBotao.telaJogoMemoria, texto: "Memória")
               ],
             )

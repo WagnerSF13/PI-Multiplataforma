@@ -58,7 +58,6 @@ class JogoMemoriaState extends State<JogoMemoria>{
       listaImagens = gerarImagens();
     }
     
-
     void clicouCarta(int linha, int coluna){
       setState(() {
         if (errou){
@@ -119,9 +118,9 @@ class JogoMemoriaState extends State<JogoMemoria>{
                 return GestureDetector(
                   onTap: () => clicouCarta(linha, coluna),
                   child: Card(
-                    color: veficiarErro(linha, coluna) ? Colors.red : verificaCerto(linha, coluna) ? Colors.green : Colors.white, 
+                    color: veficiarErro(linha, coluna) ? Colors.red : verificaCerto(linha, coluna) ? Colors.green : Colors.white, // cor da carta
                     child: Center(
-                      child: listaCartas[linha][coluna] == NomesPath.escondido ?
+                      child: listaCartas[linha][coluna] == NomesPath.escondido ? // coloca a imagem da carta
                         Image.asset(NomesPath.escondido, fit: BoxFit.cover) :
                         Image.asset(listaImagens[linha][coluna], fit: BoxFit.cover)
                       ),
@@ -135,6 +134,7 @@ class JogoMemoriaState extends State<JogoMemoria>{
     );
   }
 
+  // Verifica se virou duas cartas iguais. Retorna true caso errou
   bool veficiarErro(int linha, int coluna){
     if (ultimaCarta.length == 4){
       if ( (linha == ultimaCarta[0] && coluna == ultimaCarta[1]) || (linha == ultimaCarta[2] && coluna == ultimaCarta[3])){
@@ -144,6 +144,8 @@ class JogoMemoriaState extends State<JogoMemoria>{
     return false;
   }
 
+  // Verifica se essa carta foi acertada. Retorna true caso esteja certo.
+  // False NAO indica que a carta esta errada. Indica que ela nao foi testada por isso deve ser pintada de branco
   bool verificaCerto(int linha, int coluna){
     return cartasCertas[linha][coluna];
   }
