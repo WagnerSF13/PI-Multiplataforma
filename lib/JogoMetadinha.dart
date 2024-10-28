@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:semeador/utils/ImagemFundo.dart";
 import "package:semeador/utils/Navegacao.dart";
 import "package:semeador/utils/NomesPath.dart";
 
@@ -12,38 +13,51 @@ class JogoMetadinha extends StatefulWidget{
 class JogoMetadinhaState extends State<JogoMetadinha>{
   final int tamanhoJogo = 5;
 
+  late final List<List<String>> imagensUsadas;
   late final List<String> imagensFixas;
   late final List<String> imagensMoveis;
-
-  List<String> gerarImanges(){
-    List<String> alfabeto = List.from(NomesPath.letras);
-    alfabeto.shuffle();
-
-    while(alfabeto.length > tamanhoJogo){
-      alfabeto.removeLast();
-    }
-    return alfabeto;
-  }
-
   late final List<String> imagensCorretas;
 
   late final List<bool> podeMover = List.generate(tamanhoJogo, (valor) => true );
 
+  List<String> gerarImagensFixas(List<List<String>> imagensUsadas){
+    List<String> imagens = [];
+    for (int i = 0; i < imagensUsadas.length; i++){
+      imagens.add(imagensUsadas[i][1]);
+    }
+    return imagens;
+  }
+  List<String> gerarImagensMoveis(List<List<String>> imagensUsadas){
+    List<String> imagens = [];
+    for (int i = 0; i < imagensUsadas.length; i++){
+      imagens.add(imagensUsadas[i][2]);
+    }
+    imagens.shuffle();
+    return imagens;
+  }
+  List<String> gerarImagensCertas(List<List<String>> imagensUsadas){
+    List<String> imagens = [];
+    for (int i = 0; i < imagensUsadas.length; i++){
+      imagens.add(imagensUsadas[i][3]);
+    }
+    return imagens;
+  }
+
    @override
     void initState(){
-      imagensFixas = gerarImanges();
-      imagensMoveis = List.from(imagensFixas);
-      imagensMoveis.shuffle();
-      imagensCorretas = NomesPath.gerarLetrasCorretas(imagensFixas);
+      imagensUsadas = NomesPath.gerarImagens(tamanhoJogo);
+      imagensMoveis = gerarImagensMoveis(imagensUsadas);
+      imagensFixas = gerarImagensFixas(imagensUsadas);
+      imagensCorretas = gerarImagensCertas(imagensUsadas);
     }
 
   @override
   Widget build(BuildContext context) {
-    int contadorMovel = 0;
-    int contadorFixo = 0;
     return MaterialApp(
       home: Scaffold(
-        body: Column(
+        body: Stack(
+          children: [ImagemFundo(imagem: NomesPath.fundoEscondido),
+          Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -57,6 +71,7 @@ class JogoMetadinhaState extends State<JogoMetadinha>{
                  List.generate(tamanhoJogo, (contador) => imagemMovivel(contador) ),
             )
           ],
+        )],
         )
         ),
       );
@@ -84,10 +99,10 @@ class JogoMetadinhaState extends State<JogoMetadinha>{
   Widget soltarAqui(int posLista){
     return DragTarget<String>(
         onAcceptWithDetails: (detalhes) {
-          if(detalhes.data == imagensFixas[posLista]){
+          if(detalhes.data == imagensUsadas[posLista][2]){
             setState(() {
               for (int i = 0; i < imagensMoveis.length; i++){
-                if (imagensMoveis[i] == imagensFixas[posLista]){
+                if (imagensMoveis[i] == imagensUsadas[posLista][2]){
                   podeMover[i] = false;
                   break;
                 }

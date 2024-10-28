@@ -31,27 +31,27 @@ class JogoMemoriaState extends State<JogoMemoria>{
     }
 
     List<List<String>> gerarImagens(){
-      List<String> alfabeto = List.from(NomesPath.letras);
-      alfabeto.shuffle();
-      while (alfabeto.length > ( (tamanhoColuna * tamanhoLinha) / 2) ) {
-        alfabeto.removeLast();
+      List<List<String>> imagens = NomesPath.gerarImagens( (tamanhoLinha * tamanhoColuna) ~/ 2);
+      final int tamanho = imagens.length;
+      for (int i = 0; i < tamanho; i++){
+        imagens.add(imagens[i]);
       }
-      final numeroLetras = alfabeto.length;
-      //duplicar a litsa pois precisa de pares
-      for (int i = 0; i < numeroLetras; i++){
-        alfabeto.add(alfabeto[i]);
-      }
-
-      alfabeto.shuffle();
+    
       int contador = 0;
       List<List<String>> listaImagens = List.generate(tamanhoLinha, (i) => List.filled(tamanhoColuna, ""));
       for (int linha = 0; linha < tamanhoLinha; linha++){
-        for (int coluna = 0; coluna < tamanhoColuna; coluna++){
-          listaImagens[linha][coluna] = alfabeto[contador++];
-        }
+          for (int coluna = 0; coluna < tamanhoColuna; coluna++){
+            listaImagens[linha][coluna] = imagens[contador++][0];
+          }
       }
+
+      for (final item in listaImagens){
+        item.shuffle();
+      }
+      listaImagens.shuffle();
       return listaImagens;
     }
+
     @override
     void initState(){
       listaCartas = gerarCartas();
