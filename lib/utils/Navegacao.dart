@@ -5,9 +5,10 @@ import 'package:semeador/MenuJogos.dart';
 import 'package:semeador/MenuPerfil.dart';
 import 'package:semeador/Placar.dart';
 import 'package:semeador/JogoMemoria.dart';
+import 'package:semeador/QuebraCabeca.dart';
 
 enum FuncaoBotao{
-  telaMenuInicial, telaPlacar, telaJogoMemoria, telaJogoMetadinha, telaMenuJogos, telaMenuPerfil
+  telaMenuInicial, telaPlacar, telaJogoMemoria, telaJogoMetadinha, telaMenuJogos, telaMenuPerfil, telaJogoQuebraCabeca
 }
 
 class Navegacao {
@@ -26,6 +27,9 @@ class Navegacao {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MenuJogos() ));
       case FuncaoBotao.telaMenuPerfil:
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MenuPerfil() ));
+      case FuncaoBotao.telaJogoQuebraCabeca:
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => QuebraCabeca() ));
+
       default:
         return;
     }
