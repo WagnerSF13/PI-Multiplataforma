@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:semeador/utils/CoresCustomizadas.dart';
 import 'package:semeador/utils/Navegacao.dart';
 
 class QuebraCabeca extends StatefulWidget {
@@ -35,26 +36,11 @@ class _QuebraCabecaState extends State<QuebraCabeca> {
       });
 
 
-//ações da widget e botao
+//ganhou, voltou pro menu
       if (isSolved()) {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text('Parabéns!'),
-              content: Text('Você completou o quebra-cabeça!'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                   Navegacao.mudarTela(FuncaoBotao.telaPlacar, context);
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-      }
+        Navegacao.mudarTela(FuncaoBotao.telaPlacar, context);
+          }
+    
     }
   }
 
@@ -71,7 +57,7 @@ class _QuebraCabecaState extends State<QuebraCabeca> {
 
 
 
-//verificação se foi resolvido 
+//verificação se foi resolvido/vetor para aprovação 
   bool isSolved() {
     for (int i = 0; i < pieces.length; i++) {
       final List<int> solution = [1, 2, 3, 4, 5, 6, 7, 8, 0];
@@ -129,7 +115,7 @@ class _QuebraCabecaState extends State<QuebraCabeca> {
                 onTap: () => movePiece(index),
                 child: Container(
                   margin: EdgeInsets.all(2), // Ajuste o espaçamento entre os quadrados
-                  color: const Color.fromARGB(255, 24, 113, 185),
+                  color: CoresCustomizadas.azulEscuro,
                   child: Center(
                     child: Text(
                       pieces[index] == 0 ? '' : '${pieces[index]}',
