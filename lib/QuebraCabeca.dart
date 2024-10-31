@@ -1,92 +1,146 @@
 import 'package:flutter/material.dart';
-import 'package:semeador/utils/ImagemFundo.dart';
 import 'package:semeador/utils/Navegacao.dart';
-import 'utils/NomesPath.dart';
-
-
 
 class QuebraCabeca extends StatefulWidget {
-    @override
-    _QuebracabecaState createState() => _QuebracabecaState();
+  @override
+  _QuebraCabecaState createState() => _QuebraCabecaState();
 }
 
-class _QuebracabecaState extends State<QuebraCabeca> {
+class _QuebraCabecaState extends State<QuebraCabeca> {
+  List<int> pieces = List.generate(9, (index) => index); // 9 peças para 3x3
+  int emptyIndex = 0;
 
-    List<int> pieces = List.generate(8, (index) => index); // Exemplo para 4x4
-    int emptyIndex = 0;
   @override
   void initState() {
     super.initState();
     pieces.shuffle(); // Mistura as peças
+
+    // Verifica se a configuração é resolvível
+    while (!isSolvable(pieces)) {
+      pieces.shuffle();
+    }
+
     emptyIndex = pieces.indexOf(0); // Encontra o índice do espaço vazio
-}
-
-
-void movePiece(int index) {
-    // Lógica para mover as peças
-    // implementar a verificação de movimentos válidos
-
-    bool canMove(int index) {
-    // Calcula a linha e a coluna da peça
-    int row = index ~/ 4;
-    int col = index % 4;
-
-    // Calcula a linha e a coluna do espaço vazio
-    int emptyRow = emptyIndex ~/ 4;
-    int emptyCol = emptyIndex % 4;
-
-    // Verifica se a peça está adjacente ao espaço vazio
-    return (row == emptyRow && (col - 1 == emptyCol || col + 1 == emptyCol)) || // Horizontal
-           (col == emptyCol && (row - 1 == emptyRow || row + 1 == emptyRow)); // Vertical
   }
-    
-    
-    
-     
+
+
+
+//verifica mover as peças
+  void movePiece(int index) {
     if (canMove(index)) {
       setState(() {
-        // Troca a posição da peça com o espaço vazio
         pieces[emptyIndex] = pieces[index];
         pieces[index] = 0; // O espaço vazio agora ocupa a posição da peça
         emptyIndex = index; // Atualiza o índice do espaço vazio
       });
+
+
+//ações da widget e botao
+      if (isSolved()) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Parabéns!'),
+              content: Text('Você completou o quebra-cabeça!'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                   Navegacao.mudarTela(FuncaoBotao.telaPlacar, context);
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
     }
-  
-
-    
-
-
-
-
-
-
-
-
-
-
-
   }
+
+//boolean para verificar se pode mover a peça 
+  bool canMove(int index) {
+    int row = index ~/ 3;
+    int col = index % 3;
+    int emptyRow = emptyIndex ~/ 3;
+    int emptyCol = emptyIndex % 3;
+
+    return (row == emptyRow && (col - 1 == emptyCol || col + 1 == emptyCol)) || // Horizontal
+           (col == emptyCol && (row - 1 == emptyRow || row + 1 == emptyRow)); // Vertical
+  }
+
+
+
+//verificação se foi resolvido 
+  bool isSolved() {
+    for (int i = 0; i < pieces.length; i++) {
+      final List<int> solution = [1, 2, 3, 4, 5, 6, 7, 8, 0];
+      if (pieces[i] != solution[i]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+
+
+//verificação se é possivel resolver o quebra cabeca
+  bool isSolvable(List<int> puzzle) {
+    int inversions = 0;
+
+    // Conta o número de inversões
+    for (int i = 0; i < puzzle.length; i++) {
+      if (puzzle[i] == 0) continue; // Ignora o espaço vazio
+      for (int j = i + 1; j < puzzle.length; j++) {
+        if (puzzle[j] != 0 && puzzle[i] > puzzle[j]) {
+          inversions++;
+        }
+      }
+    }
+
+    // Posição do espaço vazio (linha contada de baixo para cima)
+    int emptyRowFromBottom = 1 + (emptyIndex ~/ 3);
+
+    // Verifica a condição de resolubilidade
+    return (emptyRowFromBottom % 2 == 0) ? (inversions % 2 == 1) : (inversions % 2 == 0);
+  }
+
+
+
+
+//widget
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Quebra Cabeca')),
-      body: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
-        itemCount: pieces.length,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () => movePiece(index),
-            child: Container(
-              margin: EdgeInsets.all(2),
-              color: const Color.fromARGB(255, 1, 17, 30),
-              child: Center(
-                child: Text(pieces[index] == 0 ? '' : '${pieces[index]}',
-                    style: TextStyle(fontSize: 24, color: Colors.white)),
-              ),
+      appBar: AppBar(title: Text('Quebra Cabeça')),
+      body: Center(
+        child: Container(
+          width: 500, // Largura total do quebra-cabeça
+          height: 500, // Altura total do quebra-cabeça
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              childAspectRatio: 1, // Mantém a proporção quadrada
             ),
-          );
-        },
+            itemCount: pieces.length,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () => movePiece(index),
+                child: Container(
+                  margin: EdgeInsets.all(2), // Ajuste o espaçamento entre os quadrados
+                  color: const Color.fromARGB(255, 24, 113, 185),
+                  child: Center(
+                    child: Text(
+                      pieces[index] == 0 ? '' : '${pieces[index]}',
+                      style: TextStyle(fontSize: 16, color: Colors.white), // Ajuste o tamanho da fonte
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }
