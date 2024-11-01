@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:semeador/utils/ImagemFundo.dart";
 import "package:semeador/utils/Navegacao.dart";
 import "package:semeador/utils/NomesPath.dart";
+import "package:semeador/utils/Responsividade.dart";
 
 class JogoMetadinha extends StatefulWidget{
   @override
@@ -12,6 +13,7 @@ class JogoMetadinha extends StatefulWidget{
 
 class JogoMetadinhaState extends State<JogoMetadinha>{
   final int tamanhoJogo = 5;
+  late double tamanhoPadding;
 
   late final List<List<String>> imagensUsadas;
   late final List<String> imagensFixas;
@@ -53,6 +55,7 @@ class JogoMetadinhaState extends State<JogoMetadinha>{
 
   @override
   Widget build(BuildContext context) {
+    tamanhoPadding = Responsividade.ehWeb(context) ? 32.0 : Responsividade.ehTablet(context) ? 16.0 : 2.0;
     return MaterialApp(
       home: Scaffold(
         body: Stack(
@@ -80,7 +83,7 @@ class JogoMetadinhaState extends State<JogoMetadinha>{
   // Imagem em baixo que podem ser movidas
   Widget imagemMovivel(int posLista){
     return Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(tamanhoPadding),
         child: podeMover[posLista] == false ? null : Draggable<String>( // Caso ja genha sido encaixada, nao mostrar nada
             data: imagensMoveis[posLista],
             feedback: Image.asset(imagensMoveis[posLista]),
@@ -93,7 +96,7 @@ class JogoMetadinhaState extends State<JogoMetadinha>{
   // Imagens em cima que nao podem ser movidas
   Widget imagemFixa(int posLista){
     return Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(tamanhoPadding),
         child: Image.asset(imagensFixas[posLista]),
       );
   }
