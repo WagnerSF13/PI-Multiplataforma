@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:semeador/utils/CoresCustomizadas.dart';
 import 'package:semeador/utils/Navegacao.dart';
+import 'package:semeador/utils/TextoCustomizado.dart';
 
 class QuebraCabeca extends StatefulWidget {
   @override
@@ -99,7 +100,7 @@ class _QuebraCabecaState extends State<QuebraCabeca> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Quebra Cabeça')),
+      appBar: AppBar(title: Center(child: TextoCustomizado(texto:"Quebra Cabeca", tamanhoFonte: 48.0))),
       body: Center(
         child: Container(
           width: 500, // Largura total do quebra-cabeça
@@ -117,9 +118,9 @@ class _QuebraCabecaState extends State<QuebraCabeca> {
                   margin: EdgeInsets.all(2), // Ajuste o espaçamento entre os quadrados
                   color: CoresCustomizadas.azulEscuro,
                   child: Center(
-                    child: Text(
-                      pieces[index] == 0 ? '' : '${pieces[index]}',
-                      style: TextStyle(fontSize: 16, color: Colors.white), // Ajuste o tamanho da fonte
+                    child: TextoCustomizado(
+                      texto: pieces[index] == 0 ? '' : '${pieces[index]}',
+                      tamanhoFonte: 38.0 // Ajuste o tamanho da fonte
                     ),
                   ),
                 ),
