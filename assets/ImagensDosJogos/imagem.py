@@ -8,10 +8,9 @@ def gerarImagens(pathImagem, pathCerto):
     certo = Image.open(pathCerto)
     certo = certo.resize((100,100))
 
-    nome100x100 = nomeImagem + "100x100.png"
+    nomeOriginal = nomeImagem + ".png"
 
     imagem = Image.open(pathImagem).resize((100,100))
-    imagem.save(nome100x100)
 
     imagemCima = imagem.crop((0, 0, 100, 50))
     imagemBaixo = imagem.crop((0, 50, 100, 100))
@@ -30,7 +29,7 @@ def gerarImagens(pathImagem, pathCerto):
     novaImagemBaixo.save(nomeBaixo)
     imagem.save(nomeCerto)
 
-    gerarCodigo(nomeImagem, nome100x100, nomeCima, nomeBaixo, nomeCerto)
+    gerarCodigo(nomeImagem, nomeOriginal, nomeCima, nomeBaixo, nomeCerto)
 
 def listarImagens():
     arquivos = os.listdir()
@@ -54,7 +53,7 @@ def gerarCodigo(nome, original, cima, baixo, certo):
     with open("CodigoGerado.txt", "a") as arquivo:
         arquivo.write(codigo)
 
-certo = "CertoIcone.PNG"
+certo = "CertoIcone.png"
 imagens = listarImagens()
 for imagem in imagens:
     gerarImagens(imagem, certo)

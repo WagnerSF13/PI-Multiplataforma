@@ -22,7 +22,7 @@ class MenuInicial extends StatelessWidget{
                 children: [
                   SizedBox(height: tamanhoGap),
                   BotaoAnimado(svgPath: NomesPath.play, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra, operacaoBotao: FuncaoBotao.telaMenuPerfil, escalaTamanho: 0.2),
-                  TextoCustomizado(texto: "JOGAR", escalaTamanho: 0.09)
+                  TextoCustomizado(texto: "JOGAR", tamanhoFonte: 72.0)
               ],
             ),
             )

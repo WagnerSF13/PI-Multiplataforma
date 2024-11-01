@@ -16,9 +16,8 @@ class Placar extends StatelessWidget{
         backgroundColor: CoresCustomizadas.azul,
         body: Column(
           children: [
-            SizedBox(height: MediaQuery.of(context).size.width * 0.04),
-            TextoCustomizado(texto: "Parabéns!", escalaTamanho: 0.15),
-            TextoCustomizado(texto: "$pontos", escalaTamanho: 0.15),
+            TextoCustomizado(texto: "Parabéns!", tamanhoFonte: 72.0),
+            TextoCustomizado(texto: "$pontos", tamanhoFonte: 72.0,),
             Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

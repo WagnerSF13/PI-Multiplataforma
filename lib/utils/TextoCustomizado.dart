@@ -2,17 +2,13 @@ import 'package:flutter/material.dart';
 
 class TextoCustomizado extends StatelessWidget{
   final String texto;
-  final double escalaTamanho;
-  const TextoCustomizado({super.key, required this.texto, this.escalaTamanho = 0.1});
+  final double tamanhoFonte;
+  const TextoCustomizado({super.key, required this.texto, this.tamanhoFonte = 24.0});
 
   final String fontFamily = 'Chubby Cheeks';
   
   @override
   Widget build(BuildContext context) {
-  final double largura = MediaQuery.of(context).size.width;
-  final double altura = MediaQuery.of(context).size.height;
-
-  final fontSize = (largura * escalaTamanho + altura * escalaTamanho) / 2;
     return  Stack(
               // Stroke do texto
               alignment: Alignment.center,
@@ -20,7 +16,7 @@ class TextoCustomizado extends StatelessWidget{
                 Text(
                   texto,
                   style: TextStyle(
-                    fontSize: fontSize,
+                    fontSize: tamanhoFonte,
                     fontFamily: fontFamily,
                     foreground: Paint()
                       ..style = PaintingStyle.stroke
@@ -32,7 +28,7 @@ class TextoCustomizado extends StatelessWidget{
                   // Texto
                   texto,
                   style: TextStyle(
-                    fontSize: fontSize,
+                    fontSize: tamanhoFonte,
                     fontFamily: fontFamily,
                     color: Colors.white,
                   ),
