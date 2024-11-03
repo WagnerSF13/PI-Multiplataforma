@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:semeador/utils/Responsividade.dart';
 import 'utils/BotaoAnimado.dart';
 import 'utils/CoresCustomizadas.dart';
 import 'utils/NomesPath.dart';
@@ -13,22 +14,24 @@ class Placar extends StatelessWidget{
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: CoresCustomizadas.azul,
+          title: Center(
+            child: TextoCustomizado(texto: "Parabéns!", tamanhoFonte: 48.0),
+          ),
+        ),
         backgroundColor: CoresCustomizadas.azul,
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: MediaQuery.of(context).size.width * 0.04),
-            TextoCustomizado(texto: "Parabéns!", escalaTamanho: 0.15),
-            TextoCustomizado(texto: "$pontos", escalaTamanho: 0.15),
-            Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  //BotaoAnimado(svgPath: NomesPath.play, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra, operacaoBotao: FuncaoBotao.telaMenuInicial, escalaTamanho: 0.15),
-                  //SizedBox(width: MediaQuery.of(context).size.width * 0.1),
-                  BotaoAnimado(svgPath: NomesPath.menu, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra, operacaoBotao: FuncaoBotao.telaMenuJogos, escalaTamanho: 0.15)
-                ],
-              ),
-            )
+            TextoCustomizado(texto: "$pontos", tamanhoFonte: Responsividade.ehWeb(context) ? 256.0 : Responsividade.ehTablet(context) ? 150.0 : 100.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                //BotaoAnimado(svgPath: NomesPath.play, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra, operacaoBotao: FuncaoBotao.telaMenuInicial, escalaTamanho: 0.15),
+                BotaoAnimado(svgPath: NomesPath.menu, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra, operacaoBotao: FuncaoBotao.telaMenuJogos, escalaTamanho: 0.15)
+              ],
+            ),
           ],
         ),
       ),

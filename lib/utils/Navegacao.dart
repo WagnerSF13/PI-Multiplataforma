@@ -18,7 +18,7 @@ class Navegacao {
       case FuncaoBotao.telaMenuInicial:
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MenuInicial() ));
       case FuncaoBotao.telaPlacar:
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Placar(pontos: 3) ));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Placar(pontos: 10) ));
       case FuncaoBotao.telaJogoMemoria:
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => JogoMemoria() ));
       case FuncaoBotao.telaJogoMetadinha:
