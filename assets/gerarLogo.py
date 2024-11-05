@@ -1,6 +1,6 @@
 from PIL import Image
 
-nomeOriginal = "escondido.png"
+nomeOriginal = "semeador_logo.png"
 nomeFinal = "ic_launcher"
 xxx = (192, 192)
 xx = (144, 144)

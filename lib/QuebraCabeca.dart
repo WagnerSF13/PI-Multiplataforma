@@ -100,7 +100,7 @@ class _QuebraCabecaState extends State<QuebraCabeca> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Center(child: TextoCustomizado(texto:"Quebra Cabeca", tamanhoFonte: 48.0))),
+      appBar: AppBar(title: Center(child: TextoCustomizado(texto:"Quebra Cabeça", tamanhoFonte: 48.0))),
       body: Center(
         child: Container(
           width: 500, // Largura total do quebra-cabeça

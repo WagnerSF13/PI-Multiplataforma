@@ -14,19 +14,19 @@ class TextoCustomizado extends StatelessWidget{
               alignment: Alignment.center,
               children: [
                 Text(
-                  texto,
+                  texto.toUpperCase(),
                   style: TextStyle(
                     fontSize: tamanhoFonte,
                     fontFamily: fontFamily,
                     foreground: Paint()
                       ..style = PaintingStyle.stroke
-                      ..strokeWidth = 10
+                      ..strokeWidth = 6
                       ..color = Colors.black,
                   ),
                 ),
                 Text(
                   // Texto
-                  texto,
+                  texto.toUpperCase(),
                   style: TextStyle(
                     fontSize: tamanhoFonte,
                     fontFamily: fontFamily,
