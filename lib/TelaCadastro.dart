@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:semeador/utils/BotaoAnimado.dart';
+import 'package:semeador/utils/CardResponsivo.dart';
 import 'package:semeador/utils/CoresCustomizadas.dart';
 import 'package:semeador/utils/Navegacao.dart';
 import 'package:semeador/utils/NomesPath.dart';
 import 'package:semeador/utils/Responsividade.dart';
 import 'package:semeador/utils/TextoCustomizado.dart';
 import 'dart:io';
+import 'dart:typed_data';
 
 class TelaCadastro extends StatefulWidget{
   @override
@@ -17,8 +19,9 @@ class TelaCadastro extends StatefulWidget{
 
 class TelaCadastroState extends State<TelaCadastro>{
 
-  File? imagem;
+  Uint8List? imagem;
   final ImagePicker imagePicker = ImagePicker();
+  String nome = "";
 
   @override
   Widget build(BuildContext context) {
@@ -26,29 +29,36 @@ class TelaCadastroState extends State<TelaCadastro>{
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: Center(child: TextoCustomizado(texto: "Cadastro"))),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.all(16.0),
-              child: SizedBox(
-                width: Responsividade.ehWeb(context) ? tamanho * 0.4 : tamanho * 0.6,
-                child: usuarioForm(),
-              ),
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: SizedBox(
+                    width: Responsividade.ehWeb(context) ? tamanho * 0.4 : tamanho * 0.6,
+                    child: usuarioForm(),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: SizedBox(
+                    width: Responsividade.ehWeb(context) ? tamanho * 0.4 : tamanho * 0.6,
+                    child: senhaForm(),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 20, bottom: 20),
+                  child: botaoPegarImagem()),
+                preview(imagem, nome == "" ? "Nome" : nome),
+                Padding(
+                  padding: EdgeInsets.only(top: 20, bottom: 20),
+                  child: botaoCadastrar(), 
+                ),
+              ],
             ),
-            Padding(
-              padding: EdgeInsets.all(16.0),
-              child: SizedBox(
-                width: Responsividade.ehWeb(context) ? tamanho * 0.4 : tamanho * 0.6,
-                child: senhaForm(),
-              ),
-            ),
-            botaoPegarImagem(),
-            Padding(
-              padding: EdgeInsets.only(top: 50),
-              child: botaoLogin(), 
-            )
-          ],
+          ),
         )
       ),
     );
@@ -56,6 +66,11 @@ class TelaCadastroState extends State<TelaCadastro>{
 
   Widget usuarioForm(){
     return TextFormField(
+      onChanged: (String novoTexto){
+        setState(() {
+          nome = novoTexto;
+        });
+      },
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
         hintText: "Usuario",
@@ -72,8 +87,11 @@ class TelaCadastroState extends State<TelaCadastro>{
       ),
     );
   }
-  Widget botaoLogin(){
-    return BotaoAnimado(svgPath: NomesPath.play, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra, operacaoBotao: FuncaoBotao.telaMenuInicial);
+  Widget botaoCadastrar(){
+    return ElevatedButton(
+      onPressed: (){},
+      child: Text("Cadastrar usuário")
+    );
   }
 
   Widget botaoPegarImagem(){
@@ -83,12 +101,28 @@ class TelaCadastroState extends State<TelaCadastro>{
     );
   }
 
+  Widget preview(Uint8List? imagem, String texto){
+    return Container(
+      color: Colors.blue,
+      width: Responsividade.ehWeb(context) ? 300 : 200,
+      height: Responsividade.ehWeb(context) ? 300 : 200,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(flex: 3, child: imagem == null ? Image.asset(NomesPath.escondido) : Image.memory(imagem)),
+          Expanded(flex: 1, child: FittedBox(child: TextoCustomizado(texto: texto))),
+        ],
+      ),
+    );
+  }
+
   Future<void> pegarImagem() async{
     try{
       final imagemEscolhida = await imagePicker.pickImage(source: ImageSource.gallery);
       if(imagemEscolhida != null){
+        final bytes = await imagemEscolhida.readAsBytes();
         setState(() {
-          imagem = File(imagemEscolhida.path);
+          imagem = bytes;
         });
       }
     }

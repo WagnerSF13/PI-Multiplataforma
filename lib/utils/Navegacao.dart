@@ -8,7 +8,7 @@ import 'package:semeador/JogoMemoria.dart';
 import 'package:semeador/QuebraCabeca.dart';
 
 enum FuncaoBotao{
-  telaMenuInicial, telaPlacar, telaJogoMemoria, telaJogoMetadinha, telaMenuJogos, telaMenuPerfil, telaJogoQuebraCabeca
+  telaMenuInicial, telaPlacar, telaJogoMemoria, telaJogoMetadinha, telaMenuJogos, telaMenuPerfil, telaJogoQuebraCabeca, nada
 }
 
 class Navegacao {

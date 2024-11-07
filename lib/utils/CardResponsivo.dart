@@ -6,14 +6,14 @@ class CardResponsivo extends StatelessWidget{
   final Color cor;
   final FuncaoBotao operacaoBotao;
   final String texto;
-  const CardResponsivo({super.key, required this.imagemPath, this.cor = Colors.blue, required this.operacaoBotao, required this.texto});
+  const CardResponsivo({super.key, required this.imagemPath, this.cor = Colors.blue, this.operacaoBotao = FuncaoBotao.nada, required this.texto});
 
   
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navegacao.mudarTela(operacaoBotao, context);
+        operacaoBotao != FuncaoBotao.nada ? Navegacao.mudarTela(operacaoBotao, context) : {};
       }, 
       child: Container(
         color: cor,
