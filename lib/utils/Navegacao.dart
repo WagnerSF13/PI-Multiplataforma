@@ -6,9 +6,10 @@ import 'package:semeador/MenuPerfil.dart';
 import 'package:semeador/Placar.dart';
 import 'package:semeador/JogoMemoria.dart';
 import 'package:semeador/QuebraCabeca.dart';
+import 'package:semeador/JogoAdvinha.dart';
 
 enum FuncaoBotao{
-  telaMenuInicial, telaPlacar, telaJogoMemoria, telaJogoMetadinha, telaMenuJogos, telaMenuPerfil, telaJogoQuebraCabeca, nada
+  telaMenuInicial, telaPlacar, telaJogoMemoria, telaJogoMetadinha, telaMenuJogos, telaMenuPerfil, telaJogoQuebraCabeca, telaJogoAdvinha, nada
 }
 
 class Navegacao {
@@ -29,6 +30,8 @@ class Navegacao {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MenuPerfil() ));
       case FuncaoBotao.telaJogoQuebraCabeca:
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => QuebraCabeca() ));
+      case FuncaoBotao.telaJogoAdvinha:
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => JogoAdvinha() ));
 
       default:
         return;

@@ -12,6 +12,7 @@ class MenuJogos extends StatelessWidget{
     cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.abelha, operacaoBotao: FuncaoBotao.telaJogoMetadinha, texto: "Metadinha"));
     cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.escondido, operacaoBotao: FuncaoBotao.telaJogoMemoria, texto: "Memória"));
     cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.cachorro, operacaoBotao: FuncaoBotao.telaJogoQuebraCabeca, texto: "Cabeça"));
+    cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.tigre, operacaoBotao: FuncaoBotao.telaJogoAdvinha, texto: "Advinha"));
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -20,7 +21,7 @@ class MenuJogos extends StatelessWidget{
           ),
         ),
         body: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
           itemBuilder: 
             (context, index){
               return Padding(
@@ -28,7 +29,7 @@ class MenuJogos extends StatelessWidget{
                 child: cartoesJogos[index],
               );
             },
-            itemCount: 3, 
+            itemCount: 4, 
           ),
         )
     );
