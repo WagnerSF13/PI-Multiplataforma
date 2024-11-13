@@ -11,8 +11,9 @@ class JogoAdvinha extends StatefulWidget {
 
 class _JogoAdvinhaState extends State<JogoAdvinha> {
   late List<String> opcoes;
-  late String imagemPergunta;
+  String imagemPergunta = "";
   late List<String> opcoesSelecionadas = [];
+  int turnoAtual = 1;
 
   @override
   void initState() {
@@ -21,12 +22,17 @@ class _JogoAdvinhaState extends State<JogoAdvinha> {
   }
 
   void _gerarPergunta() {
-    // Seleciona um grupo de imagens aleatório como pergunta
-    List<String> grupoSelecionado =
-        NomesPath.todasImagens[Random().nextInt(NomesPath.todasImagens.length)];
+    String novaImagemPergunta;
     
+    do{
+    // Seleciona um grupo de imagens aleatório como pergunta
+      List<String> grupoSelecionado =
+          NomesPath.todasImagens[Random().nextInt(NomesPath.todasImagens.length)];    
     // Define a imagem correta como a primeira do grupo
-    imagemPergunta = grupoSelecionado.first;
+      novaImagemPergunta = grupoSelecionado.first;
+    } while (novaImagemPergunta == imagemPergunta);
+
+    imagemPergunta = novaImagemPergunta;
 
     // Gera as opções (incluso a correta e outras erradas)
     Set<String> opcoesSet = {imagemPergunta};
@@ -42,18 +48,26 @@ class _JogoAdvinhaState extends State<JogoAdvinha> {
   }
 
   void _selecionarOpcao(String opcao) {
-    if(!opcoesSelecionadas.contains(opcao)){ //verifica se a opção ja foi selecionada
+    if (!opcoesSelecionadas.contains(opcao)) {
+      setState(() {
+        opcoesSelecionadas.add(opcao); // Adiciona a opção às opções selecionadas
 
-    setState(() {
-      opcoesSelecionadas.add(opcao); // adiciona a opção às opções selecionadas
-
-      if (opcao == imagemPergunta) {
-        // Acertou: Navegar para a tela de pontuação após um tempo
-        Future.delayed(Duration(seconds: 1), () {
-          Navegacao.mudarTela(FuncaoBotao.telaPlacar, context);
-        });
-      }
-    });
+        if (opcao == imagemPergunta) {
+          // Marca a resposta correta com verde e aguarda antes de avançar para o próximo turno
+          Future.delayed(Duration(seconds: 1), () {
+            if (turnoAtual == 3) {
+              // Terceiro turno: Navegar para a tela de pontuação
+              Navegacao.mudarTela(FuncaoBotao.telaPlacar, context);
+            } else {
+              // Avança para o próximo turno
+              turnoAtual++;
+              opcoesSelecionadas.clear();
+              _gerarPergunta();
+              setState(() {}); // Atualiza a interface para refletir as mudanças
+            }
+          });
+        }
+      });
     }
   }
 
@@ -65,6 +79,7 @@ class _JogoAdvinhaState extends State<JogoAdvinha> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            if (imagemPergunta.isNotEmpty)
             ColorFiltered(
               colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
               child: Image.asset(imagemPergunta, height: 200),
