@@ -88,8 +88,37 @@ static const String tigreBaixo = "assets/ImagensDosJogos/tigreBaixo.png";
 static const String tigreCerto = "assets/ImagensDosJogos/tigreCerto.png";
 static const List<String> tigreGrupo = [tigre, tigreCima, tigreBaixo, tigreCerto];
 
-static const List<List<String>> frutasImagens = [cerejaGrupo, cocoGrupo, laranjaGrupo, limaoGrupo, macaGrupo, mangaGrupo, peraGrupo];
-static const List<List<String>> animaisImagens = [abelhaGrupo, cachorroGrupo, tigreGrupo];
+// Codigo gerado automaticamente pelo script Python imagem.py
+static const String livro = "assets/ImagensDosJogos/livro.png";
+static const String livroCima = "assets/ImagensDosJogos/livroCima.png";
+static const String livroBaixo = "assets/ImagensDosJogos/livroBaixo.png";
+static const String livroCerto = "assets/ImagensDosJogos/livroCerto.png";
+static const List<String> livroGrupo = [livro, livroCima, livroBaixo, livroCerto];
 
-static const List<List<String>> todasImagens = [...frutasImagens, ...animaisImagens];
+// Codigo gerado automaticamente pelo script Python imagem.py
+static const String mesa = "assets/ImagensDosJogos/mesa.png";
+static const String mesaCima = "assets/ImagensDosJogos/mesaCima.png";
+static const String mesaBaixo = "assets/ImagensDosJogos/mesaBaixo.png";
+static const String mesaCerto = "assets/ImagensDosJogos/mesaCerto.png";
+static const List<String> mesaGrupo = [mesa, mesaCima, mesaBaixo, mesaCerto];
+
+// Codigo gerado automaticamente pelo script Python imagem.py
+static const String pessego = "assets/ImagensDosJogos/pessego.png";
+static const String pessegoCima = "assets/ImagensDosJogos/pessegoCima.png";
+static const String pessegoBaixo = "assets/ImagensDosJogos/pessegoBaixo.png";
+static const String pessegoCerto = "assets/ImagensDosJogos/pessegoCerto.png";
+static const List<String> pessegoGrupo = [pessego, pessegoCima, pessegoBaixo, pessegoCerto];
+
+// Codigo gerado automaticamente pelo script Python imagem.py
+static const String pinguim = "assets/ImagensDosJogos/pinguim.png";
+static const String pinguimCima = "assets/ImagensDosJogos/pinguimCima.png";
+static const String pinguimBaixo = "assets/ImagensDosJogos/pinguimBaixo.png";
+static const String pinguimCerto = "assets/ImagensDosJogos/pinguimCerto.png";
+static const List<String> pinguimGrupo = [pinguim, pinguimCima, pinguimBaixo, pinguimCerto];
+
+static const List<List<String>> frutasImagens = [cerejaGrupo, cocoGrupo, laranjaGrupo, limaoGrupo, macaGrupo, mangaGrupo, peraGrupo, pessegoGrupo];
+static const List<List<String>> animaisImagens = [abelhaGrupo, cachorroGrupo, tigreGrupo, pinguimGrupo];
+static const List<List<String>> objetosImagens = [livroGrupo, mesaGrupo];
+
+static const List<List<String>> todasImagens = [...frutasImagens, ...animaisImagens, ...objetosImagens];
 }

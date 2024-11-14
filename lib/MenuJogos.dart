@@ -12,7 +12,7 @@ class MenuJogos extends StatelessWidget{
     cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.abelha, operacaoBotao: FuncaoBotao.telaJogoMetadinha, texto: "Metadinha"));
     cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.escondido, operacaoBotao: FuncaoBotao.telaJogoMemoria, texto: "Memória"));
     cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.cachorro, operacaoBotao: FuncaoBotao.telaJogoQuebraCabeca, texto: "Cabeça"));
-    cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.tigre, operacaoBotao: FuncaoBotao.telaJogoAdvinha, texto: "Advinha"));
+    cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.tigre, operacaoBotao: FuncaoBotao.telaJogoAdvinha, texto: "Adivinha"));
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(

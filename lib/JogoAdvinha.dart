@@ -74,7 +74,7 @@ class _JogoAdvinhaState extends State<JogoAdvinha> {
   @override
   Widget build(BuildContext context) {
     return Scaffold( 
-      appBar: AppBar(title: Center(child: TextoCustomizado(texto:"Advinha", tamanhoFonte: 48.0))),    
+      appBar: AppBar(title: Center(child: TextoCustomizado(texto:"Adivinha", tamanhoFonte: 48.0))),    
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
