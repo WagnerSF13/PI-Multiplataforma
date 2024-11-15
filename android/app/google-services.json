@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "96339855689",
+    "project_id": "semeador-live",
+    "storage_bucket": "semeador-live.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:96339855689:android:ff6a1710f303183f9b7298",
+        "android_client_info": {
+          "package_name": "com.example.code"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtFzrogKrUeSiNHoApPuDczKSHciiAR4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
