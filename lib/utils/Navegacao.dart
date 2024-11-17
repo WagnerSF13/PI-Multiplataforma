@@ -7,9 +7,12 @@ import 'package:semeador/Placar.dart';
 import 'package:semeador/JogoMemoria.dart';
 import 'package:semeador/QuebraCabeca.dart';
 import 'package:semeador/JogoAdvinha.dart';
+import 'package:semeador/TelaCadastro.dart';
+import 'package:semeador/TelaCadastroFim.dart';
+import 'package:semeador/TelaLogin.dart';
 
 enum FuncaoBotao{
-  telaMenuInicial, telaPlacar, telaJogoMemoria, telaJogoMetadinha, telaMenuJogos, telaMenuPerfil, telaJogoQuebraCabeca, telaJogoAdvinha, nada
+  telaMenuInicial, telaPlacar, telaJogoMemoria, telaJogoMetadinha, telaMenuJogos, telaMenuPerfil, telaJogoQuebraCabeca, telaJogoAdvinha, telaLogin, telaCadastro, telaCadastroFim, nada
 }
 
 class Navegacao {
@@ -32,6 +35,12 @@ class Navegacao {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => QuebraCabeca() ));
       case FuncaoBotao.telaJogoAdvinha:
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => JogoAdvinha() ));
+      case FuncaoBotao.telaLogin:
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TelaLogin() ));
+      case FuncaoBotao.telaCadastro:
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TelaCadastro() ));
+      case FuncaoBotao.telaCadastroFim:
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TelaCadastroFim() ));
 
       default:
         return;

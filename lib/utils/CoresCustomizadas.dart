@@ -6,4 +6,5 @@ class CoresCustomizadas {
   static const Color azul = Color.fromARGB(255, 0, 178, 178);
   static const Color azulPerfil = Color.fromARGB(253, 173, 252, 252);
   static const Color azulEscuro = Color.fromARGB(255, 24, 113, 185);
+  static const Color cinzaClaro = Color.fromARGB(255, 224, 224, 224);
 }
