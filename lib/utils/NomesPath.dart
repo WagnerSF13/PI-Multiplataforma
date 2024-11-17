@@ -17,7 +17,7 @@ class NomesPath {
     return imagens;
   }
 
-  static const String escondido = "assets/escondido.png";
+  static const String escondido = "assets/interrogacao.png";
 
   //Imagens
   // Codigo gerado automaticamente pelo script Python imagem.py

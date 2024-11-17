@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:semeador/utils/CoresCustomizadas.dart';
 import 'dart:math';
 import 'utils/NomesPath.dart'; 
 import 'utils/Navegacao.dart';
@@ -73,8 +74,9 @@ class _JogoAdvinhaState extends State<JogoAdvinha> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( 
-      appBar: AppBar(title: Center(child: TextoCustomizado(texto:"Adivinha", tamanhoFonte: 48.0))),    
+    return Scaffold(
+      backgroundColor: CoresCustomizadas.azul,
+      appBar: AppBar(backgroundColor: CoresCustomizadas.azul, title: Center(child: TextoCustomizado(texto:"Adivinha", tamanhoFonte: 48.0))),    
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -99,7 +101,7 @@ class _JogoAdvinhaState extends State<JogoAdvinha> {
                   padding: EdgeInsets.all(12),
                   color: opcoesSelecionadas.contains(opcao)
                       ? (opcao == imagemPergunta ? Colors.green : Colors.red)
-                      : Colors.grey[200],
+                      : CoresCustomizadas.azulEscuro,
                   child: Image.asset(opcao, height: 100),
                 ),
               );

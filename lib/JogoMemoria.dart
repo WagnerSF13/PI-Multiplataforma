@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:semeador/utils/CoresCustomizadas.dart';
 import 'package:semeador/utils/ImagemFundo.dart';
 import 'package:semeador/utils/Navegacao.dart';
 import 'utils/NomesPath.dart';
@@ -118,7 +119,7 @@ class JogoMemoriaState extends State<JogoMemoria>{
                 return GestureDetector(
                   onTap: () => clicouCarta(linha, coluna),
                   child: Card(
-                    color: veficiarErro(linha, coluna) ? Colors.red : verificaCerto(linha, coluna) ? Colors.green : Colors.white, // cor da carta
+                    color: veficiarErro(linha, coluna) ? Colors.red : verificaCerto(linha, coluna) ? Colors.green : CoresCustomizadas.azul, // cor da carta
                     child: Center(
                       child: listaCartas[linha][coluna] == NomesPath.escondido ? // coloca a imagem da carta
                         Image.asset(NomesPath.escondido, fit: BoxFit.cover) :

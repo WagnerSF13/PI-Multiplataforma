@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:semeador/utils/CardResponsivo.dart';
+import 'package:semeador/utils/CoresCustomizadas.dart';
 import 'package:semeador/utils/Navegacao.dart';
 import 'package:semeador/utils/NomesPath.dart';
 import 'package:semeador/utils/TextoCustomizado.dart';
@@ -11,12 +12,14 @@ class MenuPerfil extends StatelessWidget{
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: CoresCustomizadas.azul,
         appBar: AppBar(
+          backgroundColor: CoresCustomizadas.azul,
           title: Center(
             child: TextoCustomizado(texto: "Escolha o Perfil", tamanhoFonte: 48.0),
           ),
         ),
-        body: CustomScrollView(
+        body: CustomScrollView(    
           slivers: [
             SliverGrid(
               delegate: SliverChildBuilderDelegate(
