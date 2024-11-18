@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:semeador/autenticacao_servico.dart';
 import 'package:semeador/utils/BotaoAnimado.dart';
 import 'package:semeador/utils/CardResponsivo.dart';
 import 'package:semeador/utils/CoresCustomizadas.dart';
@@ -31,11 +32,11 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailFocusNode = FocusNode();
   final _senhaFocusNode = FocusNode();
 
-  void _login() {
-    if (_formKey.currentState!.validate()) {
-      Navegacao.mudarTela(FuncaoBotao.telaCadastro, context);
-    }
-  }
+  AutenticacaoServico _autenServico = AutenticacaoServico();
+
+void _login() {
+
+}
 
   @override
   void dispose() {
@@ -153,4 +154,21 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
+  // botaoPrincipalClicado() { 
+  //   String usuario = _emailController.text;
+  //   String senha = _senhaController.text;
+  //   if (_formKey.currentState!.validate()) {
+  //     if (cadastrarUsuario) { 
+  //       print("Entrada Validada");
+  //     }else{
+  //       print("Cadastro Validado");
+  //       print("${_emailController}, ${_senhaController}");
+  //       _autenServico.cadastrarUsuario(usuario: usuario, senha: senha);
+  //     }
+  //   } else {
+  //     print("Cadastro Inválido");
+  //   }
+  // }
 }
+  

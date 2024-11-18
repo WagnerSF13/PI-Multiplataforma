@@ -7,7 +7,11 @@ import 'package:semeador/TelaCadastroFim.dart';
 import 'firebase_options.dart';
 import 'package:semeador/TelaLogin.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
   ));
