@@ -1,10 +1,11 @@
 import "package:flutter/material.dart";
 import "package:semeador/utils/CardResponsivo.dart";
+import "package:semeador/utils/CoresCustomizadas.dart";
 import "package:semeador/utils/Navegacao.dart";
 import "package:semeador/utils/NomesPath.dart";
 import "package:semeador/utils/TextoCustomizado.dart";
 
-class MenuJogos extends StatelessWidget{
+class MenuJogos extends StatelessWidget {
 
   final List<Widget> cartoesJogos = [];
   @override
@@ -13,6 +14,7 @@ class MenuJogos extends StatelessWidget{
     cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.escondido, operacaoBotao: FuncaoBotao.telaJogoMemoria, texto: "Memória"));
     cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.cachorro, operacaoBotao: FuncaoBotao.telaJogoQuebraCabeca, texto: "Cabeça"));
     cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.tigre, operacaoBotao: FuncaoBotao.telaJogoAdvinha, texto: "Adivinha"));
+    
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -20,20 +22,30 @@ class MenuJogos extends StatelessWidget{
             child: TextoCustomizado(texto: "Escolha um jogo", tamanhoFonte: 48.0),
           ),
         ),
-        body: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-          itemBuilder: 
-            (context, index){
-              return Padding(
-                padding: EdgeInsets.all(8.0),
-                child: cartoesJogos[index],
-              );
-            },
-            itemCount: 4, 
+        body: Center( 
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center, 
+            children: [
+              GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  crossAxisSpacing: 8.0,
+                  mainAxisSpacing: 8.0,
+                ),
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: cartoesJogos[index],
+                  );
+                },
+                itemCount: 4,
+                shrinkWrap: true, 
+                physics: NeverScrollableScrollPhysics(),
+              ),
+            ],
           ),
-        )
+        ),
+      ),
     );
   }
-
-  
 }
