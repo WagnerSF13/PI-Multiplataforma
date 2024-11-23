@@ -34,9 +34,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   AutenticacaoServico _autenServico = AutenticacaoServico();
 
-void _login() {
-
-}
+  void _login() {
+    if (_formKey.currentState!.validate()) {
+      Navegacao.mudarTela(FuncaoBotao.telaCadastro, context);
+    }
+  }
 
   @override
   void dispose() {
@@ -52,24 +54,18 @@ void _login() {
       appBar: AppBar(
         backgroundColor: CoresCustomizadas.azul,
         toolbarHeight: 120,
-        title: Center(
-            child: TextoCustomizado(texto: "Bem-vindo, professor(a)!", tamanhoFonte: 48.0)),
-        actions: [
-          Align(
-            alignment:
-                Alignment.centerRight, // botão à direita
-            child: Padding(
-              padding: EdgeInsets.only(right: 16.0,),
-              child: BotaoAnimado(
-                svgPath: NomesPath.cancelar,
-                corBotao: CoresCustomizadas.amarelo,
-                corSombra: CoresCustomizadas.amareloSombra,
-                operacaoBotao: FuncaoBotao.telaMenuInicial,
-                escalaTamanho: 0.075,
-              ),
-            ),
-          ),
-        ],
+        title: TextoCustomizado(texto: "Bem-vindo, professor(a)!", tamanhoFonte: 48.0),
+        centerTitle: true,
+        actions: [Padding(
+          padding: EdgeInsets.only(right: 16.0),
+          child: BotaoAnimado(
+                  svgPath: NomesPath.cancelar,
+                  corBotao: CoresCustomizadas.amarelo,
+                  corSombra: CoresCustomizadas.amareloSombra,
+                  operacaoBotao: FuncaoBotao.telaMenuInicial,
+                  escalaTamanho: 0.075,
+                ),
+        )],
       ),
       body: Center(
         child: Padding(
@@ -79,74 +75,16 @@ void _login() {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                ClipOval(
-                child: Image.asset('assets/logoSemeador.png', width: 200, fit: BoxFit.cover,),
-                ),
-                SizedBox(height: 80),
-                SizedBox(
-                  width: 300,
-                  child: TextFormField(
-                    controller: _emailController,
-                    focusNode: _emailFocusNode,
-                    decoration: InputDecoration(
-                      labelText: 'Usuário',
-                      labelStyle: TextStyle(color: CoresCustomizadas.azulEscuro),
-                      filled: true,
-                      fillColor: CoresCustomizadas.cinzaClaro,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      contentPadding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                if (!Responsividade.ehCelular(context)) // remove a imagem na resolucao de celular
+                  ClipOval(
+                    child: Image.asset(
+                      'assets/logoSemeador.png',
+                      width: 150,
+                      fit: BoxFit.cover,
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor, insira seu usuário';
-                      }
-                      return null;
-                    },
                   ),
-                ),
-                SizedBox(height: 20),
-                SizedBox(
-                  width: 300,
-                  child: TextFormField(
-                    controller: _senhaController,
-                    focusNode: _senhaFocusNode,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: 'Senha',
-                      labelStyle: TextStyle(color: CoresCustomizadas.azulEscuro),
-                      filled: true,
-                      fillColor: CoresCustomizadas.cinzaClaro,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      contentPadding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor, insira sua senha';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                SizedBox(height: 40),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
-                    backgroundColor: CoresCustomizadas.amarelo,
-                  ),
-                  onPressed: _login,
-                  child: TextoCustomizado(
-                    texto: "Login",
-                    tamanhoFonte: 24.0,
-                  ),
-                ),
+                if (!Responsividade.ehCelular(context)) SizedBox(height: 40),
+                _buildLoginForm(context),
               ],
             ),
           ),
@@ -154,6 +92,96 @@ void _login() {
       ),
     );
   }
+
+  // form de login
+
+  Widget _buildLoginForm(BuildContext context) {
+    double width = Responsividade.ehCelular(context) ? 240 : 350; // diminui largura nos celulares OBS esquerda celular, direita resto
+    double largBotao = Responsividade.ehCelular(context) ? 240 : 350;
+    double buttonFontSize = Responsividade.ehCelular(context) ? 18 : 24; // fonte menor em celulares
+    double vertical = Responsividade.ehCelular(context) ? 12 : 20;
+    
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        // Padding(padding: EdgeInsets.symmetric(vertical: 20),),
+        Padding(
+          padding: EdgeInsets.only(bottom: vertical),    
+          child: SizedBox(
+            width: width,
+            child: TextFormField(
+              controller: _emailController,
+              focusNode: _emailFocusNode,
+              decoration: InputDecoration(
+                labelText: 'Usuário',
+                labelStyle: TextStyle(color: CoresCustomizadas.azulEscuro),
+                filled: true,
+                fillColor: CoresCustomizadas.cinzaClaro,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                  borderSide: BorderSide.none,
+                ),
+                contentPadding: EdgeInsets.symmetric(vertical: vertical, horizontal: 16.0),
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor, insira seu usuário';
+                }
+                return null;
+              },
+            ),
+          )      
+        ),
+ 
+        Padding(
+          padding: EdgeInsets.only(bottom: vertical + 20), 
+          child: SizedBox(
+            width: width,
+            child: TextFormField(
+              controller: _senhaController,
+              focusNode: _senhaFocusNode,
+              obscureText: true,
+              decoration: InputDecoration(
+                labelText: 'Senha',
+                labelStyle: TextStyle(color: CoresCustomizadas.azulEscuro),
+                filled: true,
+                fillColor: CoresCustomizadas.cinzaClaro,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                  borderSide: BorderSide.none,
+                ),
+                contentPadding: EdgeInsets.symmetric(vertical: vertical, horizontal: 16.0),
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor, insira sua senha';
+                }
+                return null;
+              },
+            ),
+          )
+        ),
+        SizedBox(
+          width: largBotao,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.symmetric(vertical: 16.0),
+              backgroundColor: CoresCustomizadas.amarelo,
+            ),
+            onPressed: _login,
+            child: TextoCustomizado(
+              texto: "Login",
+              tamanhoFonte: buttonFontSize,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
 
   // botaoPrincipalClicado() { 
   //   String usuario = _emailController.text;
@@ -170,5 +198,3 @@ void _login() {
   //     print("Cadastro Inválido");
   //   }
   // }
-}
-  

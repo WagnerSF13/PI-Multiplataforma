@@ -30,8 +30,8 @@ class TelaCadastroState extends State<TelaCadastro> {
       appBar: AppBar(
         backgroundColor: CoresCustomizadas.azul,
         toolbarHeight: 120,
-        title: Center(
-            child: TextoCustomizado(texto: "Cadastro", tamanhoFonte: 48.0)),
+        title: TextoCustomizado(texto: "Cadastro", tamanhoFonte: 48.0),
+        centerTitle: true,
         actions: [
           Align(
             alignment: Alignment.centerRight, // botão à direita
