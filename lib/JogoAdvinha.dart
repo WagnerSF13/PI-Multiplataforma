@@ -15,6 +15,7 @@ class _JogoAdvinhaState extends State<JogoAdvinha> {
   String imagemPergunta = "";
   late List<String> opcoesSelecionadas = [];
   int turnoAtual = 1;
+  bool acertou = false;
 
   @override
   void initState() {
@@ -54,6 +55,7 @@ class _JogoAdvinhaState extends State<JogoAdvinha> {
         opcoesSelecionadas.add(opcao); // Adiciona a opção às opções selecionadas
 
         if (opcao == imagemPergunta) {
+          acertou = true;
           // Marca a resposta correta com verde e aguarda antes de avançar para o próximo turno
           Future.delayed(Duration(seconds: 1), () {
             if (turnoAtual == 3) {
@@ -61,6 +63,7 @@ class _JogoAdvinhaState extends State<JogoAdvinha> {
               Navegacao.mudarTela(FuncaoBotao.telaPlacar, context);
             } else {
               // Avança para o próximo turno
+              acertou = false;
               turnoAtual++;
               opcoesSelecionadas.clear();
               _gerarPergunta();
@@ -83,7 +86,7 @@ class _JogoAdvinhaState extends State<JogoAdvinha> {
           children: [
             if (imagemPergunta.isNotEmpty)
             ColorFiltered(
-              colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
+              colorFilter: ColorFilter.mode(acertou == true ?Colors.transparent : Colors.black,  acertou == true ? BlendMode.saturation : BlendMode.srcIn),
               child: Image.asset(imagemPergunta, height: 200),
             ),
             SizedBox(height: 20),
