@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: CoresCustomizadas.azul,
       appBar: AppBar(
         backgroundColor: CoresCustomizadas.azul,
-        toolbarHeight: 120,
+        toolbarHeight: 90,
         title: TextoCustomizado(texto: "Bem-vindo, professor(a)!", tamanhoFonte: 48.0),
         centerTitle: true,
         actions: [Padding(
@@ -136,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
  
         Padding(
-          padding: EdgeInsets.only(bottom: vertical + 20), 
+          padding: EdgeInsets.only(bottom: vertical), 
           child: SizedBox(
             width: width,
             child: TextFormField(

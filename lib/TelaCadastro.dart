@@ -29,7 +29,7 @@ class TelaCadastroState extends State<TelaCadastro> {
       backgroundColor: CoresCustomizadas.azul,
       appBar: AppBar(
         backgroundColor: CoresCustomizadas.azul,
-        toolbarHeight: 120,
+        toolbarHeight: 90,
         title: TextoCustomizado(texto: "Cadastro", tamanhoFonte: 48.0),
         centerTitle: true,
         actions: [
@@ -52,33 +52,36 @@ class TelaCadastroState extends State<TelaCadastro> {
       ),
       body: Stack(
         children: [
-          SingleChildScrollView(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: SizedBox(
-                      width: Responsividade.ehWeb(context)
-                          ? tamanho * 0.4
-                          : tamanho * 0.6,
-                      child: usuarioForm(),
+          Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(4.0),
+                      child: SizedBox(
+                        width: Responsividade.ehWeb(context)
+                            ? tamanho * 0.3
+                            : tamanho * 0.6,
+                        child: usuarioForm(),
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 20, bottom: 20),
-                    child: botaoPegarImagem(),
-                  ),
-                  preview(imagem, nome == "" ? "Nome" : nome),
-                  Padding(
-                    padding: EdgeInsets.only(top: 20, bottom: 20),
-                    child: botaoCadastrar(),
-                  ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10, bottom: 10),
+                      child: botaoPegarImagem(),
+                    ),
+                    //preview(imagem, nome == "" ? "Nome" : nome),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10, bottom: 10),
+                      child: botaoCadastrar(),
+                    ),
+                  ],
+                ),
+                preview(imagem, nome == "" ? "Nome" : nome),
                 ],
               ),
             ),
-          ),
         ],
       ),
     );
@@ -101,7 +104,7 @@ class TelaCadastroState extends State<TelaCadastro> {
           borderRadius: BorderRadius.circular(30.0),
           borderSide: BorderSide.none,
         ),
-        contentPadding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
+        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
         floatingLabelBehavior: FloatingLabelBehavior.never,
       ),
       validator: (value) {
@@ -116,7 +119,7 @@ class TelaCadastroState extends State<TelaCadastro> {
   Widget botaoCadastrar() {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
         backgroundColor: CoresCustomizadas.amarelo,
       ),
       onPressed: () {},
@@ -130,12 +133,12 @@ class TelaCadastroState extends State<TelaCadastro> {
   Widget botaoPegarImagem() {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
         backgroundColor: CoresCustomizadas.amarelo,
       ),
       onPressed: pegarImagem,
       child: TextoCustomizado(
-        texto: "Escolher imagem",
+        texto: " Escolher imagem ",
         tamanhoFonte: 24.0,
       ),
     );
