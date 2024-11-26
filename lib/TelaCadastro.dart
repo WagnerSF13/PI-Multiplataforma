@@ -56,9 +56,10 @@ class TelaCadastroState extends State<TelaCadastro> {
       body: Stack(
         children: [
           Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [Column(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
@@ -82,9 +83,9 @@ class TelaCadastroState extends State<TelaCadastro> {
                   ],
                 ),
                 preview(imagem, nome == "" ? "Nome" : nome),
-                ],
-              ),
+              ],
             ),
+          ),
         ],
       ),
     );
@@ -119,28 +120,32 @@ class TelaCadastroState extends State<TelaCadastro> {
     );
   }
 
- Widget botaoCadastrar() {
-  return ElevatedButton(
-    style: ElevatedButton.styleFrom(
-      padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
-      backgroundColor: CoresCustomizadas.amarelo,
-    ),
-    onPressed: () {
-      if (imagem != null && nome.isNotEmpty) {
-        salvarDadosComImagem(nome, imagem!);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Por favor, insira um nome e escolha uma imagem.')),
-        );
-      }
-    },
-    child: TextoCustomizado(
-      texto: "Cadastrar usuário",
-      tamanhoFonte: 24.0,
-    ),
-  );
-}
-
+  Widget botaoCadastrar() {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
+        backgroundColor: CoresCustomizadas.amarelo,
+      ),
+      onPressed: () {
+        if (imagem != null && nome.isNotEmpty) {
+          salvarDadosComImagem(nome, imagem!);
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content:
+                  Text('Aluno cadastrado com sucesso!', textAlign: TextAlign.center,)));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content:
+                    Text('Por favor, insira um nome e escolha uma imagem.', textAlign: TextAlign.center,)),
+          );
+        }
+      },
+      child: TextoCustomizado(
+        texto: "Cadastrar usuário",
+        tamanhoFonte: 24.0,
+      ),
+    );
+  }
 
   Widget botaoPegarImagem() {
     return ElevatedButton(
@@ -176,18 +181,18 @@ class TelaCadastroState extends State<TelaCadastro> {
     );
   }
 
-Future<void> salvarDadosComImagem(String nome, Uint8List imagemBytes) async {
-  String imagemBase64 = base64Encode(imagemBytes);
-  await FirebaseFirestore.instance.collection('alunos').add({
-    'nome': nome,
-    'imagemBase64': imagemBase64,
-  });
-}
+  Future<void> salvarDadosComImagem(String nome, Uint8List imagemBytes) async {
+    String imagemBase64 = base64Encode(imagemBytes);
+    await FirebaseFirestore.instance.collection('alunos').add({
+      'nome': nome,
+      'imagemBase64': imagemBase64,
+    });
+  }
 
-Widget exibirImagem(String imagemBase64) {
-  Uint8List imagemBytes = base64Decode(imagemBase64);
-  return Image.memory(imagemBytes);
-}
+  Widget exibirImagem(String imagemBase64) {
+    Uint8List imagemBytes = base64Decode(imagemBase64);
+    return Image.memory(imagemBytes);
+  }
 
   Future<void> pegarImagem() async {
     try {

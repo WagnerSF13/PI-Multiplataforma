@@ -8,7 +8,6 @@ import 'package:semeador/JogoMemoria.dart';
 import 'package:semeador/QuebraCabeca.dart';
 import 'package:semeador/JogoAdvinha.dart';
 import 'package:semeador/TelaCadastro.dart';
-import 'package:semeador/TelaCadastroFim.dart';
 import 'package:semeador/TelaLogin.dart';
 
 enum FuncaoBotao{
@@ -39,8 +38,6 @@ class Navegacao {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TelaLogin() ));
       case FuncaoBotao.telaCadastro:
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TelaCadastro() ));
-      case FuncaoBotao.telaCadastroFim:
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TelaCadastroFim() ));
 
       default:
         return;
