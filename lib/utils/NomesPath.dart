@@ -170,6 +170,63 @@ class NomesPath {
     pinguimCerto
   ];
 
+  // Codigo gerado automaticamente pelo script Python imagem.py
+static const String cavalo = "assets/ImagensDosJogos/cavalo.png";
+static const String cavaloCima = "assets/ImagensDosJogos/cavaloCima.png";
+static const String cavaloBaixo = "assets/ImagensDosJogos/cavaloBaixo.png";
+static const String cavaloCerto = "assets/ImagensDosJogos/cavaloCerto.png";
+static const List<String> cavaloGrupo = [cavalo, cavaloCima, cavaloBaixo, cavaloCerto];
+
+// Codigo gerado automaticamente pelo script Python imagem.py
+static const String lapis = "assets/ImagensDosJogos/lapis.png";
+static const String lapisCima = "assets/ImagensDosJogos/lapisCima.png";
+static const String lapisBaixo = "assets/ImagensDosJogos/lapisBaixo.png";
+static const String lapisCerto = "assets/ImagensDosJogos/lapisCerto.png";
+static const List<String> lapisGrupo = [lapis, lapisCima, lapisBaixo, lapisCerto];
+
+// Codigo gerado automaticamente pelo script Python imagem.py
+static const String macaco = "assets/ImagensDosJogos/macaco.png";
+static const String macacoCima = "assets/ImagensDosJogos/macacoCima.png";
+static const String macacoBaixo = "assets/ImagensDosJogos/macacoBaixo.png";
+static const String macacoCerto = "assets/ImagensDosJogos/macacoCerto.png";
+static const List<String> macacoGrupo = [macaco, macacoCima, macacoBaixo, macacoCerto];
+
+// Codigo gerado automaticamente pelo script Python imagem.py
+static const String melancia = "assets/ImagensDosJogos/melancia.png";
+static const String melanciaCima = "assets/ImagensDosJogos/melanciaCima.png";
+static const String melanciaBaixo = "assets/ImagensDosJogos/melanciaBaixo.png";
+static const String melanciaCerto = "assets/ImagensDosJogos/melanciaCerto.png";
+static const List<String> melanciaGrupo = [melancia, melanciaCima, melanciaBaixo, melanciaCerto];
+
+// Codigo gerado automaticamente pelo script Python imagem.py
+static const String morango = "assets/ImagensDosJogos/morango.png";
+static const String morangoCima = "assets/ImagensDosJogos/morangoCima.png";
+static const String morangoBaixo = "assets/ImagensDosJogos/morangoBaixo.png";
+static const String morangoCerto = "assets/ImagensDosJogos/morangoCerto.png";
+static const List<String> morangoGrupo = [morango, morangoCima, morangoBaixo, morangoCerto];
+
+// Codigo gerado automaticamente pelo script Python imagem.py
+static const String uva = "assets/ImagensDosJogos/uva.png";
+static const String uvaCima = "assets/ImagensDosJogos/uvaCima.png";
+static const String uvaBaixo = "assets/ImagensDosJogos/uvaBaixo.png";
+static const String uvaCerto = "assets/ImagensDosJogos/uvaCerto.png";
+static const List<String> uvaGrupo = [uva, uvaCima, uvaBaixo, uvaCerto];
+
+// Codigo gerado automaticamente pelo script Python imagem.py
+static const String ventilador = "assets/ImagensDosJogos/ventilador.png";
+static const String ventiladorCima = "assets/ImagensDosJogos/ventiladorCima.png";
+static const String ventiladorBaixo = "assets/ImagensDosJogos/ventiladorBaixo.png";
+static const String ventiladorCerto = "assets/ImagensDosJogos/ventiladorCerto.png";
+static const List<String> ventiladorGrupo = [ventilador, ventiladorCima, ventiladorBaixo, ventiladorCerto];
+
+// Codigo gerado automaticamente pelo script Python imagem.py
+static const String zebra = "assets/ImagensDosJogos/zebra.png";
+static const String zebraCima = "assets/ImagensDosJogos/zebraCima.png";
+static const String zebraBaixo = "assets/ImagensDosJogos/zebraBaixo.png";
+static const String zebraCerto = "assets/ImagensDosJogos/zebraCerto.png";
+static const List<String> zebraGrupo = [zebra, zebraCima, zebraBaixo, zebraCerto];
+
+
   static const List<List<String>> frutasImagens = [
     cerejaGrupo,
     cocoGrupo,
@@ -177,16 +234,27 @@ class NomesPath {
     limaoGrupo,
     macaGrupo,
     mangaGrupo,
+    melanciaGrupo,
+    morangoGrupo,
     peraGrupo,
-    pessegoGrupo
+    pessegoGrupo,
+    uvaGrupo
   ];
   static const List<List<String>> animaisImagens = [
     abelhaGrupo,
     cachorroGrupo,
     tigreGrupo,
-    pinguimGrupo
+    pinguimGrupo,
+    cavaloGrupo,
+    zebraGrupo,
+    macacoGrupo
   ];
-  static const List<List<String>> objetosImagens = [livroGrupo, mesaGrupo];
+  static const List<List<String>> objetosImagens = [
+    livroGrupo,
+    mesaGrupo,
+    lapisGrupo,
+    ventiladorGrupo
+    ];
 
   static const List<List<String>> todasImagens = [
     ...frutasImagens,
