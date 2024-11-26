@@ -10,6 +10,7 @@ import 'package:semeador/utils/Responsividade.dart';
 import 'package:semeador/utils/TextoCustomizado.dart';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class TelaLogin extends StatelessWidget {
   @override
@@ -32,13 +33,46 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailFocusNode = FocusNode();
   final _senhaFocusNode = FocusNode();
 
-  AutenticacaoServico _autenServico = AutenticacaoServico();
+// OBS.: Usuario: professor@semeador.com Senha: semeador123
+// Pra acessaro o banco de usuarios e adicionar ou remover um usuario de la, vai no firebase, visao geral do projeto, authentication
 
-  void _login() {
-    if (_formKey.currentState!.validate()) {
+  void _login() async {
+  if (_formKey.currentState!.validate()) {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _senhaController.text.trim(),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Login realizado com sucesso!', textAlign: TextAlign.center,)),
+      );
+
       Navegacao.mudarTela(FuncaoBotao.telaCadastro, context);
+    } on FirebaseAuthException catch (e) {
+      String mensagemErro;
+
+      if (e.code == 'user-not-found') {
+        mensagemErro = 'Usuário não encontrado.';
+      } else if (e.code == 'invalid-email') {
+        mensagemErro = 'O e-mail informado é inválido.';
+      } else {
+        mensagemErro = 'Erro: Usuário ou senha inválidos, tente novamente.';
+      }
+      
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(mensagemErro, textAlign: TextAlign.center,)),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erro inesperado. Tente novamente.', textAlign: TextAlign.center,)),
+      );
     }
   }
+}
 
   @override
   void dispose() {
@@ -182,19 +216,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-
-  // botaoPrincipalClicado() { 
-  //   String usuario = _emailController.text;
-  //   String senha = _senhaController.text;
-  //   if (_formKey.currentState!.validate()) {
-  //     if (cadastrarUsuario) { 
-  //       print("Entrada Validada");
-  //     }else{
-  //       print("Cadastro Validado");
-  //       print("${_emailController}, ${_senhaController}");
-  //       _autenServico.cadastrarUsuario(usuario: usuario, senha: senha);
-  //     }
-  //   } else {
-  //     print("Cadastro Inválido");
-  //   }
-  // }
