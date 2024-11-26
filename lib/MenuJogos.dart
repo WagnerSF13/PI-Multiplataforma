@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:semeador/utils/BotaoAnimado.dart";
 import "package:semeador/utils/CardResponsivo.dart";
 import "package:semeador/utils/CoresCustomizadas.dart";
 import "package:semeador/utils/Navegacao.dart";
@@ -17,10 +18,30 @@ class MenuJogos extends StatelessWidget {
     
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: CoresCustomizadas.azul,
         appBar: AppBar(
-          title: Center(
-            child: TextoCustomizado(texto: "Escolha um jogo", tamanhoFonte: 48.0),
-          ),
+          backgroundColor: CoresCustomizadas.azul,
+          toolbarHeight: 90,
+          title:
+              TextoCustomizado(texto: "Escolha um Jogo", tamanhoFonte: 48.0),
+          centerTitle: true,
+          actions: [
+            Align(
+              alignment: Alignment.centerRight, // botão à direita
+              child: Padding(
+                padding: EdgeInsets.only(
+                  right: 16.0,
+                ),
+                child: BotaoAnimado(
+                  svgPath: NomesPath.cancelar,
+                  corBotao: CoresCustomizadas.amarelo,
+                  corSombra: CoresCustomizadas.amareloSombra,
+                  operacaoBotao: FuncaoBotao.telaMenuInicial,
+                  escalaTamanho: 0.075,
+                ),
+              ),
+            ),
+          ],
         ),
         body: Center( 
           child: Column(

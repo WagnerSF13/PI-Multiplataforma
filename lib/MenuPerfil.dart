@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:semeador/utils/BotaoAnimado.dart';
 import 'package:semeador/utils/CardResponsivo.dart';
 import 'package:semeador/utils/CoresCustomizadas.dart';
 import 'package:semeador/utils/Navegacao.dart';
 import 'package:semeador/utils/NomesPath.dart';
 import 'package:semeador/utils/TextoCustomizado.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
 
-class MenuPerfil extends StatelessWidget{
+class MenuPerfil extends StatelessWidget {
   const MenuPerfil({super.key});
+
+  Future<List<Map<String, dynamic>>> carregarPerfis() async {
+    final querySnapshot =
+        await FirebaseFirestore.instance.collection('alunos').get();
+    return querySnapshot.docs
+        .map((doc) => doc.data() as Map<String, dynamic>)
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,26 +26,80 @@ class MenuPerfil extends StatelessWidget{
         backgroundColor: CoresCustomizadas.azul,
         appBar: AppBar(
           backgroundColor: CoresCustomizadas.azul,
-          title: Center(
-            child: TextoCustomizado(texto: "Escolha o Perfil", tamanhoFonte: 48.0),
-          ),
-        ),
-        body: CustomScrollView(    
-          slivers: [
-            SliverGrid(
-              delegate: SliverChildBuilderDelegate(
-                (context, index){
-                  return Padding(
-                    padding: EdgeInsets.all(8.0),
-                    // TODO passar o nome do aluno e icone como parametro para criar o perfil de cada aluno cadastrado no bd junto com seu icone
-                    child: CardResponsivo(imagemPath: NomesPath.abelha, operacaoBotao: FuncaoBotao.telaMenuJogos, texto: "Nome do aluno") // Container com o perfil de cada aluno e professor
-                  );
-                },
-                childCount: 8, // Numero de contas no banco de dados
+          toolbarHeight: 90,
+          title:
+              TextoCustomizado(texto: "Escolha o Perfil", tamanhoFonte: 48.0),
+          centerTitle: true,
+          actions: [
+            Align(
+              alignment: Alignment.centerRight, // botão à direita
+              child: Padding(
+                padding: EdgeInsets.only(
+                  right: 16.0,
+                ),
+                child: BotaoAnimado(
+                  svgPath: NomesPath.cancelar,
+                  corBotao: CoresCustomizadas.amarelo,
+                  corSombra: CoresCustomizadas.amareloSombra,
+                  operacaoBotao: FuncaoBotao.telaMenuInicial,
+                  escalaTamanho: 0.075,
+                ),
               ),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3) // Quantidade de perfil por linha
-            )
+            ),
           ],
+        ),
+        body: FutureBuilder<List<Map<String, dynamic>>>(
+          future: carregarPerfis(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  "Erro ao carregar perfis!",
+                  style: TextStyle(color: Colors.red, fontSize: 20.0),
+                ),
+              );
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(
+                child: Text(
+                  "Nenhum perfil cadastrado.",
+                  style: TextStyle(color: Colors.white, fontSize: 20.0),
+                ),
+              );
+            }
+
+            final perfis = snapshot.data!;
+            return CustomScrollView(
+              slivers: [
+                SliverGrid(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      final perfil = perfis[index];
+                      final nome = perfil['nome'] ?? "Sem Nome";
+                      final imagemBase64 = perfil['imagemBase64'] ?? "";
+                      final imagemBytes = imagemBase64.isNotEmpty
+                          ? base64Decode(imagemBase64)
+                          : null;
+
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CardResponsivo(
+                          imagemBytes: imagemBytes,
+                          texto: nome,
+                          operacaoBotao: FuncaoBotao.telaMenuJogos,
+                        ),
+                      );
+                    },
+                    childCount: perfis.length,
+                  ),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
