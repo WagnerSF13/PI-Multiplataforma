@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:semeador/utils/CoresCustomizadas.dart';
 import 'package:semeador/utils/Navegacao.dart';
+import 'package:semeador/utils/Responsividade.dart';
 import 'package:semeador/utils/TextoCustomizado.dart';
 
 class QuebraCabeca extends StatefulWidget {
@@ -99,12 +100,14 @@ class _QuebraCabecaState extends State<QuebraCabeca> {
 
   @override
   Widget build(BuildContext context) {
+    double width = Responsividade.ehCelular(context) ? 240 : 500; // diminui largura nos celulares OBS esquerda celular, direita resto
+    double height = Responsividade.ehCelular(context) ? 240 : 500;
     return Scaffold(
       appBar: AppBar(title: Center(child: TextoCustomizado(texto:"Quebra Cabeça", tamanhoFonte: 48.0))),
       body: Center(
         child: Container(
-          width: 500, // Largura total do quebra-cabeça
-          height: 500, // Altura total do quebra-cabeça
+          width: width, // Largura total do quebra-cabeça
+          height: height, // Altura total do quebra-cabeça
           child: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
