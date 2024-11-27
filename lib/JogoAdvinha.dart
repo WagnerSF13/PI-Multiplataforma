@@ -93,7 +93,7 @@ class _JogoAdvinhaState extends State<JogoAdvinha> {
               colorFilter: ColorFilter.mode(acertou == true ?Colors.transparent : Colors.black,  acertou == true ? BlendMode.saturation : BlendMode.srcIn),
               child: Image.asset(imagemPergunta, height: tamanhoImagem),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Wrap(
               spacing: Responsividade.ehWeb(context) ? 32.0 : Responsividade.ehCelular(context) ? 8.0 : Responsividade.ehTablet(context) ? 16.0 : 24.0,
               runSpacing: Responsividade.ehWeb(context) ? 32.0 : Responsividade.ehCelular(context) ? 8.0 : Responsividade.ehTablet(context) ? 16.0 : 24.0,
