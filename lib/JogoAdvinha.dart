@@ -4,6 +4,7 @@ import 'dart:math';
 import 'utils/NomesPath.dart'; 
 import 'utils/Navegacao.dart';
 import 'package:semeador/utils/TextoCustomizado.dart';
+import 'package:semeador/utils/Responsividade.dart';
 
 class JogoAdvinha extends StatefulWidget {
   @override
@@ -77,9 +78,12 @@ class _JogoAdvinhaState extends State<JogoAdvinha> {
 
   @override
   Widget build(BuildContext context) {
+    double tamanhoImagem = Responsividade.ehWeb(context) ? 400 : Responsividade.ehCelular(context) ? 150 : Responsividade.ehTablet(context) ? 200 : 300;
+    double tamanhoOpcao = Responsividade.ehWeb(context) ? 180 : Responsividade.ehCelular(context) ? 80 : Responsividade.ehTablet(context) ? 120 : 150;
     return Scaffold(
       backgroundColor: CoresCustomizadas.azul,
-      appBar: AppBar(backgroundColor: CoresCustomizadas.azul, title: Center(child: TextoCustomizado(texto:"Adivinha", tamanhoFonte: 48.0))),    
+      appBar: AppBar(backgroundColor: CoresCustomizadas.azul, title: Center(child: TextoCustomizado(texto:"Adivinha", 
+      tamanhoFonte: Responsividade.ehWeb(context) ? 48.0 : Responsividade.ehCelular(context) ? 24.0 : Responsividade.ehTablet(context) ? 32.0 : 40.0))),    
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -87,12 +91,12 @@ class _JogoAdvinhaState extends State<JogoAdvinha> {
             if (imagemPergunta.isNotEmpty)
             ColorFiltered(
               colorFilter: ColorFilter.mode(acertou == true ?Colors.transparent : Colors.black,  acertou == true ? BlendMode.saturation : BlendMode.srcIn),
-              child: Image.asset(imagemPergunta, height: 200),
+              child: Image.asset(imagemPergunta, height: tamanhoImagem),
             ),
             SizedBox(height: 20),
             Wrap(
-              spacing: 16.0,
-              runSpacing: 16.0,
+              spacing: Responsividade.ehWeb(context) ? 32.0 : Responsividade.ehCelular(context) ? 8.0 : Responsividade.ehTablet(context) ? 16.0 : 24.0,
+              runSpacing: Responsividade.ehWeb(context) ? 32.0 : Responsividade.ehCelular(context) ? 8.0 : Responsividade.ehTablet(context) ? 16.0 : 24.0,
               alignment: WrapAlignment.center,
               children: opcoes.map((opcao) {
               return GestureDetector(
@@ -105,7 +109,7 @@ class _JogoAdvinhaState extends State<JogoAdvinha> {
                   color: opcoesSelecionadas.contains(opcao)
                       ? (opcao == imagemPergunta ? Colors.green : Colors.red)
                       : CoresCustomizadas.azulEscuro,
-                  child: Image.asset(opcao, height: 100),
+                  child: Image.asset(opcao, height: tamanhoOpcao),
                 ),
               );
             }).toList(),   //converte as opções em uma lista de widgets
