@@ -55,16 +55,16 @@ class MenuPerfil extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
               return Center(
-                child: Text(
-                  "Erro ao carregar perfis!",
-                  style: TextStyle(color: Colors.red, fontSize: 20.0),
+                child: TextoCustomizado(
+                  texto: "Erro ao carregar perfis.",
+                  tamanhoFonte: 34.0,
                 ),
               );
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return const Center(
-                child: Text(
-                  "Nenhum perfil cadastrado.",
-                  style: TextStyle(color: Colors.white, fontSize: 20.0),
+                child: TextoCustomizado(
+                  texto: "Nenhum perfil encontrado.",
+                  tamanhoFonte: 34.0,
                 ),
               );
             }
