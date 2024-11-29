@@ -27,21 +27,24 @@ class TelaCadastroState extends State<TelaCadastro> {
 
   @override
   Widget build(BuildContext context) {
-    final double tamanho = MediaQuery.of(context).size.width;
+    final double largura = MediaQuery.of(context).size.width;
+    final double pad = Responsividade.ehCelular(context) ? 5 : 10;
+    double alturaToolbar = Responsividade.ehCelular(context) ? 60 : 120;
     return Scaffold(
       backgroundColor: CoresCustomizadas.azul,
       appBar: AppBar(
-        backgroundColor: CoresCustomizadas.azul,
-        toolbarHeight: 90,
-        title: TextoCustomizado(texto: "Cadastro", tamanhoFonte: 48.0),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        toolbarHeight: alturaToolbar,
+        title: TextoCustomizado(
+          texto: "Cadastro",
+          tamanhoFonte: Responsividade.ehCelular(context) ? 36.0 : 48.0,
+        ),
         centerTitle: true,
         actions: [
           Align(
-            alignment: Alignment.centerRight, // botão à direita
+            alignment: Alignment.centerRight,
             child: Padding(
-              padding: EdgeInsets.only(
-                right: 16.0,
-              ),
+              padding: EdgeInsets.only(right: 16.0),
               child: BotaoAnimado(
                 svgPath: NomesPath.cancelar,
                 corBotao: CoresCustomizadas.amarelo,
@@ -53,40 +56,60 @@ class TelaCadastroState extends State<TelaCadastro> {
           ),
         ],
       ),
-      body: Stack(
-        children: [
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(4.0),
-                      child: SizedBox(
-                        width: Responsividade.ehWeb(context)
-                            ? tamanho * 0.3
-                            : tamanho * 0.6,
-                        child: usuarioForm(),
-                      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Expanded(
+              flex: Responsividade.ehCelular(context) ? 2 : 3,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: SizedBox(
+                      width: Responsividade.ehCelular(context)
+                          ? largura * 0.8
+                          : largura * 0.5,
+                      child: usuarioForm(),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10, bottom: 10),
-                      child: botaoPegarImagem(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: pad),
+                    child: botaoPegarImagem(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: pad),
+                    child: botaoCadastrar(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: pad),
+                    child: TextoCustomizado(
+                      texto: "Ou...",
+                      tamanhoFonte:
+                          Responsividade.ehCelular(context) ? 18.0 : 24.0,
                     ),
-                    //preview(imagem, nome == "" ? "Nome" : nome),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10, bottom: 10),
-                      child: botaoCadastrar(),
-                    ),
-                  ],
-                ),
-                preview(imagem, nome == "" ? "Nome" : nome),
-              ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: pad),
+                    child: botaoCadastroProfessor(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: pad),
+                    child: botaoEditarAluno(),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            Expanded(
+              flex: 1,
+              child: Center(
+                child: preview(imagem, nome == "" ? "Nome" : nome),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -120,29 +143,72 @@ class TelaCadastroState extends State<TelaCadastro> {
     );
   }
 
+  Widget botaoCadastroProfessor() {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(
+          vertical: Responsividade.ehCelular(context) ? 12.0 : 20.0,
+          horizontal: Responsividade.ehCelular(context) ? 8.0 : 16.0,
+        ),
+        backgroundColor: CoresCustomizadas.azulEscuro,
+      ),
+      onPressed: () => Navegacao.mudarTela(FuncaoBotao.telaCadastroProfessor, context),
+      child: TextoCustomizado(
+        texto: "Cadastrar Professor",
+        tamanhoFonte: Responsividade.ehCelular(context) ? 18.0 : 24.0,
+      ),
+    );
+  }
+
+  Widget botaoEditarAluno() {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(
+          vertical: Responsividade.ehCelular(context) ? 12.0 : 20.0,
+          horizontal: Responsividade.ehCelular(context) ? 8.0 : 16.0,
+        ),
+        backgroundColor: CoresCustomizadas.azulEscuro,
+      ),
+      onPressed: () => Navegacao.mudarTela(FuncaoBotao.telaLogin, context),
+      child: TextoCustomizado(
+        texto: "Editar Aluno",
+        tamanhoFonte: Responsividade.ehCelular(context) ? 18.0 : 24.0,
+      ),
+    );
+  }
+
   Widget botaoCadastrar() {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
+        padding: EdgeInsets.symmetric(
+          vertical: Responsividade.ehCelular(context) ? 12.0 : 20.0,
+          horizontal: Responsividade.ehCelular(context) ? 8.0 : 16.0,
+        ),
         backgroundColor: CoresCustomizadas.amarelo,
       ),
       onPressed: () {
         if (imagem != null && nome.isNotEmpty) {
           salvarDadosComImagem(nome, imagem!);
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content:
-                  Text('Aluno cadastrado com sucesso!', textAlign: TextAlign.center,)));
+            content: Text(
+              'Aluno cadastrado com sucesso!',
+              textAlign: TextAlign.center,
+            ),
+          ));
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-                content:
-                    Text('Por favor, insira um nome e escolha uma imagem.', textAlign: TextAlign.center,)),
+              content: Text(
+                'Por favor, insira um nome e escolha uma imagem.',
+                textAlign: TextAlign.center,
+              ),
+            ),
           );
         }
       },
       child: TextoCustomizado(
         texto: "Cadastrar usuário",
-        tamanhoFonte: 24.0,
+        tamanhoFonte: Responsividade.ehCelular(context) ? 18.0 : 24.0,
       ),
     );
   }
@@ -150,13 +216,16 @@ class TelaCadastroState extends State<TelaCadastro> {
   Widget botaoPegarImagem() {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
+        padding: EdgeInsets.symmetric(
+          vertical: Responsividade.ehCelular(context) ? 12.0 : 20.0,
+          horizontal: Responsividade.ehCelular(context) ? 8.0 : 16.0,
+        ),
         backgroundColor: CoresCustomizadas.amarelo,
       ),
       onPressed: pegarImagem,
       child: TextoCustomizado(
-        texto: " Escolher imagem ",
-        tamanhoFonte: 24.0,
+        texto: "Escolher imagem",
+        tamanhoFonte: Responsividade.ehCelular(context) ? 18.0 : 24.0,
       ),
     );
   }
@@ -164,18 +233,21 @@ class TelaCadastroState extends State<TelaCadastro> {
   Widget preview(Uint8List? imagem, String texto) {
     return Container(
       color: Colors.blue,
-      width: Responsividade.ehWeb(context) ? 300 : 200,
-      height: Responsividade.ehWeb(context) ? 300 : 200,
+      width: Responsividade.ehCelular(context) ? 150 : 300,
+      height: Responsividade.ehCelular(context) ? 150 : 300,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
-              flex: 3,
-              child: imagem == null
-                  ? Image.asset(NomesPath.escondido)
-                  : Image.memory(imagem)),
+            flex: 3,
+            child: imagem == null
+                ? Image.asset(NomesPath.escondido)
+                : Image.memory(imagem),
+          ),
           Expanded(
-              flex: 1, child: FittedBox(child: TextoCustomizado(texto: texto))),
+            flex: 1,
+            child: FittedBox(child: TextoCustomizado(texto: texto)),
+          ),
         ],
       ),
     );
@@ -187,11 +259,6 @@ class TelaCadastroState extends State<TelaCadastro> {
       'nome': nome,
       'imagemBase64': imagemBase64,
     });
-  }
-
-  Widget exibirImagem(String imagemBase64) {
-    Uint8List imagemBytes = base64Decode(imagemBase64);
-    return Image.memory(imagemBytes);
   }
 
   Future<void> pegarImagem() async {

@@ -4,6 +4,7 @@ import "package:semeador/utils/CardResponsivo.dart";
 import "package:semeador/utils/CoresCustomizadas.dart";
 import "package:semeador/utils/Navegacao.dart";
 import "package:semeador/utils/NomesPath.dart";
+import "package:semeador/utils/Responsividade.dart";
 import "package:semeador/utils/TextoCustomizado.dart";
 
 class MenuJogos extends StatelessWidget {
@@ -15,13 +16,14 @@ class MenuJogos extends StatelessWidget {
     cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.escondido, operacaoBotao: FuncaoBotao.telaJogoMemoria, texto: "Memória"));
     cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.cachorro, operacaoBotao: FuncaoBotao.telaJogoQuebraCabeca, texto: "Cabeça"));
     cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.tigre, operacaoBotao: FuncaoBotao.telaJogoAdvinha, texto: "Adivinha"));
+    double alturaToolbar = Responsividade.ehCelular(context) ? 60 : 120;
     
     return MaterialApp(
       home: Scaffold(
         backgroundColor: CoresCustomizadas.azul,
         appBar: AppBar(
           backgroundColor: CoresCustomizadas.azul,
-          toolbarHeight: 90,
+          toolbarHeight: alturaToolbar,
           title:
               TextoCustomizado(texto: "Escolha um Jogo", tamanhoFonte: 48.0),
           centerTitle: true,

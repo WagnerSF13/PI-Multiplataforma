@@ -4,6 +4,7 @@ import 'package:semeador/utils/CardResponsivo.dart';
 import 'package:semeador/utils/CoresCustomizadas.dart';
 import 'package:semeador/utils/Navegacao.dart';
 import 'package:semeador/utils/NomesPath.dart';
+import 'package:semeador/utils/Responsividade.dart';
 import 'package:semeador/utils/TextoCustomizado.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:convert';
@@ -21,12 +22,13 @@ class MenuPerfil extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double alturaToolbar = Responsividade.ehCelular(context) ? 60 : 120;
     return MaterialApp(
       home: Scaffold(
         backgroundColor: CoresCustomizadas.azul,
         appBar: AppBar(
           backgroundColor: CoresCustomizadas.azul,
-          toolbarHeight: 90,
+          toolbarHeight: alturaToolbar,
           title:
               TextoCustomizado(texto: "Escolha o Perfil", tamanhoFonte: 48.0),
           centerTitle: true,

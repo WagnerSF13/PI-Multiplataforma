@@ -6,6 +6,7 @@ class NomesPath {
   static const String menu = "assets/menu.svg";
   static const String menuInicial = "assets/FundoMenuInicial.png";
   static const String fundoEscondido = "assets/escondidoFundo.png";
+  static const String voltar = "assets/voltar.svg";
 
   static List<List<String>> gerarImagens(int numeroDeImagens) {
     List<List<String>> imagens = [];
