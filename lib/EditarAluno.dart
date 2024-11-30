@@ -13,19 +13,35 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:convert';
 
-class TelaCadastro extends StatefulWidget {
+class EditarAluno extends StatefulWidget {
+  final String alunoId;
+  final String? nomeInicial;
+  final String? imagemBase64Inicial;
+
+  const EditarAluno({
+    Key? key,
+    required this.alunoId,
+    required this.nomeInicial,
+    required this.imagemBase64Inicial,
+  }) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
-    return TelaCadastroState();
+    return TelaEditarAlunoState();
   }
 }
 
-class TelaCadastroState extends State<TelaCadastro> {
+class TelaEditarAlunoState extends State<EditarAluno> {
+  bool alterado = false; // Indica se algo foi alterado
   Uint8List? imagem;
   final ImagePicker imagePicker = ImagePicker();
   String nome = "";
 
   @override
+  void initState() {
+    super.initState();
+    
+  }
   Widget build(BuildContext context) {
     final double largura = MediaQuery.of(context).size.width;
     final double pad = Responsividade.ehCelular(context) ? 5 : 10;
@@ -81,23 +97,11 @@ class TelaCadastroState extends State<TelaCadastro> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: pad),
-                    child: botaoCadastrar(),
+                    child: botaoEditar(),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: pad),
-                    child: TextoCustomizado(
-                      texto: "Ou...",
-                      tamanhoFonte:
-                          Responsividade.ehCelular(context) ? 18.0 : 24.0,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: pad),
-                    child: botaoCadastroProfessor(),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: pad),
-                    child: botaoEditarAluno(),
+                    child: botaoApagar(),
                   ),
                 ],
               ),
@@ -118,9 +122,11 @@ class TelaCadastroState extends State<TelaCadastro> {
     return TextFormField(
       onChanged: (String novoTexto) {
         setState(() {
+          alterado = novoTexto != widget.nomeInicial || imagem != null;
           nome = novoTexto;
         });
       },
+      
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
         labelText: "Usuário",
@@ -143,41 +149,35 @@ class TelaCadastroState extends State<TelaCadastro> {
     );
   }
 
-  Widget botaoCadastroProfessor() {
+  Widget botaoApagar() {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.symmetric(
           vertical: Responsividade.ehCelular(context) ? 12.0 : 20.0,
           horizontal: Responsividade.ehCelular(context) ? 8.0 : 16.0,
         ),
-        backgroundColor: CoresCustomizadas.azulEscuro,
+        backgroundColor: CoresCustomizadas.vermelho,
       ),
-      onPressed: () => Navegacao.mudarTela(FuncaoBotao.telaCadastroProfessor, context),
+      onPressed: () async {
+  await FirebaseFirestore.instance
+      .collection('alunos')
+      .doc(widget.alunoId)
+      .delete();
+
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text('Aluno excluído com sucesso!'),
+  ));
+  
+  Navegacao.mudarTela(FuncaoBotao.telaPerfilEditar, context); // Retorna à tela anterior
+},
       child: TextoCustomizado(
-        texto: "Cadastrar Professor",
+        texto: "Excluir Aluno",
         tamanhoFonte: Responsividade.ehCelular(context) ? 18.0 : 24.0,
       ),
     );
   }
 
-  Widget botaoEditarAluno() {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(
-          vertical: Responsividade.ehCelular(context) ? 12.0 : 20.0,
-          horizontal: Responsividade.ehCelular(context) ? 8.0 : 16.0,
-        ),
-        backgroundColor: CoresCustomizadas.azulEscuro,
-      ),
-      onPressed: () => Navegacao.mudarTela(FuncaoBotao.telaPerfilEditar, context),
-      child: TextoCustomizado(
-        texto: "Editar Aluno",
-        tamanhoFonte: Responsividade.ehCelular(context) ? 18.0 : 24.0,
-      ),
-    );
-  }
-
-  Widget botaoCadastrar() {
+  Widget botaoEditar() {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.symmetric(
@@ -186,28 +186,25 @@ class TelaCadastroState extends State<TelaCadastro> {
         ),
         backgroundColor: CoresCustomizadas.amarelo,
       ),
-      onPressed: () {
+      onPressed: alterado ? () async {
         if (imagem != null && nome.isNotEmpty) {
-          salvarDadosComImagem(nome, imagem!);
+          await FirebaseFirestore.instance
+              .collection('alunos')
+              .doc(widget.alunoId)
+              .update({
+            'nome': nome,
+            'imagemBase64': base64Encode(imagem!),
+          });
+
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(
-              'Aluno cadastrado com sucesso!',
-              textAlign: TextAlign.center,
-            ),
+            content: Text('Aluno editado com sucesso!'),
           ));
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                'Por favor, insira um nome e escolha uma imagem.',
-                textAlign: TextAlign.center,
-              ),
-            ),
-          );
+          Navegacao.mudarTela(FuncaoBotao.telaPerfilEditar, context); // Retorna à tela anterior
         }
-      },
+      }
+    : null,
       child: TextoCustomizado(
-        texto: "Cadastrar usuário",
+        texto: "Confirmar",
         tamanhoFonte: Responsividade.ehCelular(context) ? 18.0 : 24.0,
       ),
     );
@@ -255,16 +252,9 @@ class TelaCadastroState extends State<TelaCadastro> {
 
   Future<void> salvarDadosComImagem(String nome, Uint8List imagemBytes) async {
     String imagemBase64 = base64Encode(imagemBytes);
-
-    // Cria o documento com um ID gerado automaticamente
-    final docRef = await FirebaseFirestore.instance.collection('alunos').add({
-      'nome': nome, // Salva o nome do usuário
-      'imagemBase64': imagemBase64, // Salva a imagem em Base64
-    });
-
-    // Atualiza o documento para incluir o ID gerado automaticamente
-    await FirebaseFirestore.instance.collection('alunos').doc(docRef.id).update({
-      'id': docRef.id, // Adiciona o ID gerado automaticamente como um campo
+    await FirebaseFirestore.instance.collection('alunos').add({
+      'nome': nome,
+      'imagemBase64': imagemBase64,
     });
   }
 
@@ -276,6 +266,8 @@ class TelaCadastroState extends State<TelaCadastro> {
         final bytes = await imagemEscolhida.readAsBytes();
         setState(() {
           imagem = bytes;
+          // Marca como alterado apenas se a nova imagem for diferente da atual
+          alterado = base64Encode(bytes) != widget.imagemBase64Inicial;
         });
       }
     } catch (e) {
