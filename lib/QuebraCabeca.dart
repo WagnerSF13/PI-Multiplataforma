@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:semeador/utils/BotaoAnimado.dart';
 import 'package:semeador/utils/CoresCustomizadas.dart';
 import 'package:semeador/utils/Navegacao.dart';
+import 'package:semeador/utils/NomesPath.dart';
 import 'package:semeador/utils/Responsividade.dart';
 import 'package:semeador/utils/TextoCustomizado.dart';
 
@@ -26,8 +28,6 @@ class _QuebraCabecaState extends State<QuebraCabeca> {
     emptyIndex = pieces.indexOf(0); // Encontra o índice do espaço vazio
   }
 
-
-
 //verifica mover as peças
   void movePiece(int index) {
     if (canMove(index)) {
@@ -37,29 +37,27 @@ class _QuebraCabecaState extends State<QuebraCabeca> {
         emptyIndex = index; // Atualiza o índice do espaço vazio
       });
 
-
 //ganhou, voltou pro menu
       if (isSolved()) {
         Navegacao.mudarTela(FuncaoBotao.telaPlacar, context);
-          }
-    
+      }
     }
   }
 
-//boolean para verificar se pode mover a peça 
+//boolean para verificar se pode mover a peça
   bool canMove(int index) {
     int row = index ~/ 3;
     int col = index % 3;
     int emptyRow = emptyIndex ~/ 3;
     int emptyCol = emptyIndex % 3;
 
-    return (row == emptyRow && (col - 1 == emptyCol || col + 1 == emptyCol)) || // Horizontal
-           (col == emptyCol && (row - 1 == emptyRow || row + 1 == emptyRow)); // Vertical
+    return (row == emptyRow &&
+            (col - 1 == emptyCol || col + 1 == emptyCol)) || // Horizontal
+        (col == emptyCol &&
+            (row - 1 == emptyRow || row + 1 == emptyRow)); // Vertical
   }
 
-
-
-//verificação se foi resolvido/vetor para aprovação 
+//verificação se foi resolvido/vetor para aprovação
   bool isSolved() {
     for (int i = 0; i < pieces.length; i++) {
       final List<int> solution = [1, 2, 3, 4, 5, 6, 7, 8, 0];
@@ -69,8 +67,6 @@ class _QuebraCabecaState extends State<QuebraCabeca> {
     }
     return true;
   }
-
-
 
 //verificação se é possivel resolver o quebra cabeca
   bool isSolvable(List<int> puzzle) {
@@ -90,20 +86,46 @@ class _QuebraCabecaState extends State<QuebraCabeca> {
     int emptyRowFromBottom = 1 + (emptyIndex ~/ 3);
 
     // Verifica a condição de resolubilidade
-    return (emptyRowFromBottom % 2 == 0) ? (inversions % 2 == 1) : (inversions % 2 == 0);
+    return (emptyRowFromBottom % 2 == 0)
+        ? (inversions % 2 == 1)
+        : (inversions % 2 == 0);
   }
-
-
-
 
 //widget
 
   @override
   Widget build(BuildContext context) {
-    double width = Responsividade.ehCelular(context) ? 240 : 500; // diminui largura nos celulares OBS esquerda celular, direita resto
+    double alturaToolbar = Responsividade.ehCelular(context) ? 60 : 120;
+    double width = Responsividade.ehCelular(context)
+        ? 240
+        : 500; // diminui largura nos celulares OBS esquerda celular, direita resto
     double height = Responsividade.ehCelular(context) ? 240 : 500;
     return Scaffold(
-      appBar: AppBar(title: Center(child: TextoCustomizado(texto:"Quebra Cabeça", tamanhoFonte: 48.0))),
+      backgroundColor: CoresCustomizadas.azul,
+      appBar: AppBar(
+        backgroundColor: CoresCustomizadas.transparente,
+        toolbarHeight: alturaToolbar,
+        title: TextoCustomizado(
+          texto: "Quebra-Cabeça",
+          tamanhoFonte: 48.0,
+        ),
+        centerTitle: true,
+        actions: [
+          Align(
+            alignment: Alignment.centerRight,
+            child: Padding(
+              padding: EdgeInsets.only(right: 16.0),
+              child: BotaoAnimado(
+                svgPath: NomesPath.cancelar,
+                corBotao: CoresCustomizadas.amarelo,
+                corSombra: CoresCustomizadas.amareloSombra,
+                operacaoBotao: FuncaoBotao.telaMenuJogos,
+                escalaTamanho: 0.075,
+              ),
+            ),
+          ),
+        ],
+      ),
       body: Center(
         child: Container(
           width: width, // Largura total do quebra-cabeça
@@ -118,13 +140,14 @@ class _QuebraCabecaState extends State<QuebraCabeca> {
               return GestureDetector(
                 onTap: () => movePiece(index),
                 child: Container(
-                  margin: EdgeInsets.all(2), // Ajuste o espaçamento entre os quadrados
+                  margin: EdgeInsets.all(
+                      2), // Ajuste o espaçamento entre os quadrados
                   color: CoresCustomizadas.azulEscuro,
                   child: Center(
                     child: TextoCustomizado(
-                      texto: pieces[index] == 0 ? '' : '${pieces[index]}',
-                      tamanhoFonte: 38.0 // Ajuste o tamanho da fonte
-                    ),
+                        texto: pieces[index] == 0 ? '' : '${pieces[index]}',
+                        tamanhoFonte: 38.0 // Ajuste o tamanho da fonte
+                        ),
                   ),
                 ),
               );

@@ -65,7 +65,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
         } else if (e.code == 'invalid-email') {
           mensagemErro = 'O e-mail informado é inválido.';
         } else if (e.code == 'weak-password') {
-          mensagemErro = 'A senha é muito fraca. Escolha uma senha mais forte.';
+          mensagemErro = 'A senha deve ter, no mínimo, 6 caracteres.';
         } else {
           mensagemErro = 'Erro ao realizar o cadastro. Tente novamente.';
         }
@@ -94,55 +94,58 @@ class _CadastroScreenState extends State<CadastroScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    double fonte = Responsividade.ehCelular(context) ? 30 : 48;
-    double alturaToolbar = Responsividade.ehCelular(context) ? 60 : 120;
-    return Scaffold(
-      backgroundColor: CoresCustomizadas.azul,
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        toolbarHeight: alturaToolbar,
-        leadingWidth: 120,
-        
-        title: TextoCustomizado(
-          texto: "Cadastro de Professor",
-          tamanhoFonte: fonte,
-        ),
-        centerTitle: true,
-        leading: Padding(
-          padding: EdgeInsets.only(left: 8.0), // Espaçamento à esquerda
-          child: SizedBox(
-            width: 56.0, // Largura padrão para o espaço do leading
-            height: 56.0, // Altura padrão para o espaço do leading
-            child: BotaoAnimado(
-              svgPath: NomesPath.voltar,
-              corBotao: CoresCustomizadas.amarelo,
-              corSombra: CoresCustomizadas.amareloSombra,
-              operacaoBotao: FuncaoBotao.telaCadastro,
-              escalaTamanho: 0.075,
-            ),
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 16.0), // Espaçamento à direita
-            child: BotaoAnimado(
-              svgPath: NomesPath.cancelar,
-              corBotao: CoresCustomizadas.amarelo,
-              corSombra: CoresCustomizadas.amareloSombra,
-              operacaoBotao: FuncaoBotao.telaMenuInicial,
-              escalaTamanho: 0.075,
-            ),
-          ),
-        ],
+Widget build(BuildContext context) {
+  double fonte = Responsividade.ehCelular(context) ? 30 : 48;
+  double alturaToolbar = Responsividade.ehCelular(context) ? 60 : 120;
+
+  return Scaffold(
+    backgroundColor: CoresCustomizadas.azul,
+    resizeToAvoidBottomInset: true, // Adicionado para evitar sobreposição do teclado
+    appBar: AppBar(
+      backgroundColor: CoresCustomizadas.transparente,
+      toolbarHeight: alturaToolbar,
+      leadingWidth: 120,
+      title: TextoCustomizado(
+        texto: "Cadastro de Professor",
+        tamanhoFonte: fonte,
       ),
-      body: Center(
+      centerTitle: true,
+      leading: Padding(
+        padding: EdgeInsets.only(left: 8.0),
+        child: SizedBox(
+          width: 56.0,
+          height: 56.0,
+          child: BotaoAnimado(
+            svgPath: NomesPath.voltar,
+            corBotao: CoresCustomizadas.amarelo,
+            corSombra: CoresCustomizadas.amareloSombra,
+            operacaoBotao: FuncaoBotao.telaCadastro,
+            escalaTamanho: 0.075,
+          ),
+        ),
+      ),
+      actions: [
+        Padding(
+          padding: EdgeInsets.only(right: 16.0),
+          child: BotaoAnimado(
+            svgPath: NomesPath.cancelar,
+            corBotao: CoresCustomizadas.amarelo,
+            corSombra: CoresCustomizadas.amareloSombra,
+            operacaoBotao: FuncaoBotao.telaMenuInicial,
+            escalaTamanho: 0.075,
+          ),
+        ),
+      ],
+    ),
+    body: SafeArea(
+      child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Form(
             key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 if (!Responsividade.ehCelular(context))
                   ClipOval(
@@ -153,14 +156,20 @@ class _CadastroScreenState extends State<CadastroScreen> {
                     ),
                   ),
                 if (!Responsividade.ehCelular(context)) SizedBox(height: 40),
-                _buildCadastroForm(context),
+                Center(
+                  child: ConstrainedBox(constraints: BoxConstraints(maxWidth: 400),
+                  child: Column(
+                    children: [_buildCadastroForm(context),],
+                  ),),
+                )
               ],
             ),
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildCadastroForm(BuildContext context) {
     double width = Responsividade.ehCelular(context) ? 240 : 350;

@@ -28,18 +28,33 @@ class TelaCadastroState extends State<TelaCadastro> {
   @override
   Widget build(BuildContext context) {
     final double largura = MediaQuery.of(context).size.width;
-    final double pad = Responsividade.ehCelular(context) ? 5 : 10;
+    final double pad = Responsividade.ehCelular(context) ? 3 : 10;
     double alturaToolbar = Responsividade.ehCelular(context) ? 60 : 120;
     return Scaffold(
       backgroundColor: CoresCustomizadas.azul,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: CoresCustomizadas.transparente,
         toolbarHeight: alturaToolbar,
+        leadingWidth: 120,
         title: TextoCustomizado(
           texto: "Cadastro",
           tamanhoFonte: Responsividade.ehCelular(context) ? 36.0 : 48.0,
         ),
         centerTitle: true,
+        leading: Padding(
+          padding: EdgeInsets.only(left: 8.0), // Espaçamento à esquerda
+          child: SizedBox(
+            width: 56.0, // Largura padrão para o espaço do leading
+            height: 56.0, // Altura padrão para o espaço do leading
+            child: BotaoAnimado(
+              svgPath: NomesPath.voltar,
+              corBotao: CoresCustomizadas.amarelo,
+              corSombra: CoresCustomizadas.amareloSombra,
+              operacaoBotao: FuncaoBotao.telaLogin,
+              escalaTamanho: 0.075,
+            ),
+          ),
+        ),
         actions: [
           Align(
             alignment: Alignment.centerRight,
@@ -144,81 +159,99 @@ class TelaCadastroState extends State<TelaCadastro> {
   }
 
   Widget botaoCadastroProfessor() {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(
-          vertical: Responsividade.ehCelular(context) ? 12.0 : 20.0,
-          horizontal: Responsividade.ehCelular(context) ? 8.0 : 16.0,
-        ),
-        backgroundColor: CoresCustomizadas.azulEscuro,
-      ),
-      onPressed: () => Navegacao.mudarTela(FuncaoBotao.telaCadastroProfessor, context),
-      child: TextoCustomizado(
-        texto: "Cadastrar Professor",
-        tamanhoFonte: Responsividade.ehCelular(context) ? 18.0 : 24.0,
-      ),
-    );
+    return SizedBox(
+        width: Responsividade.ehCelular(context)
+            ? MediaQuery.of(context).size.width * 0.3 // Largura para celular
+            : MediaQuery.of(context).size.width *
+                0.2, // Largura para outras telas
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.symmetric(
+              vertical: Responsividade.ehCelular(context) ? 6.0 : 20.0,
+            ),
+            backgroundColor: CoresCustomizadas.azulEscuro,
+          ),
+          onPressed: () =>
+              Navegacao.mudarTela(FuncaoBotao.telaCadastroProfessor, context),
+          child: TextoCustomizado(
+            texto: "Cadastrar Professor",
+            tamanhoFonte: Responsividade.ehCelular(context) ? 18.0 : 24.0,
+          ),
+        ));
   }
 
   Widget botaoEditarAluno() {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(
-          vertical: Responsividade.ehCelular(context) ? 12.0 : 20.0,
-          horizontal: Responsividade.ehCelular(context) ? 8.0 : 16.0,
-        ),
-        backgroundColor: CoresCustomizadas.azulEscuro,
-      ),
-      onPressed: () => Navegacao.mudarTela(FuncaoBotao.telaPerfilEditar, context),
-      child: TextoCustomizado(
-        texto: "Editar Aluno",
-        tamanhoFonte: Responsividade.ehCelular(context) ? 18.0 : 24.0,
-      ),
-    );
+    return SizedBox(
+        width: Responsividade.ehCelular(context)
+            ? MediaQuery.of(context).size.width * 0.3 // Largura para celular
+            : MediaQuery.of(context).size.width *
+                0.2, // Largura para outras telas
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.symmetric(
+              vertical: Responsividade.ehCelular(context) ? 6.0 : 20.0,
+            ),
+            backgroundColor: CoresCustomizadas.azulEscuro,
+          ),
+          onPressed: () =>
+              Navegacao.mudarTela(FuncaoBotao.telaPerfilEditar, context),
+          child: TextoCustomizado(
+            texto: "Editar Aluno",
+            tamanhoFonte: Responsividade.ehCelular(context) ? 18.0 : 24.0,
+          ),
+        ));
   }
 
   Widget botaoCadastrar() {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(
-          vertical: Responsividade.ehCelular(context) ? 12.0 : 20.0,
-          horizontal: Responsividade.ehCelular(context) ? 8.0 : 16.0,
-        ),
-        backgroundColor: CoresCustomizadas.amarelo,
-      ),
-      onPressed: () {
-        if (imagem != null && nome.isNotEmpty) {
-          salvarDadosComImagem(nome, imagem!);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(
-              'Aluno cadastrado com sucesso!',
-              textAlign: TextAlign.center,
+    return SizedBox(
+        width: Responsividade.ehCelular(context)
+            ? MediaQuery.of(context).size.width * 0.3 // Largura para celular
+            : MediaQuery.of(context).size.width *
+                0.2, // Largura para outras telas
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.symmetric(
+              vertical: Responsividade.ehCelular(context) ? 6.0 : 20.0,
             ),
-          ));
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                'Por favor, insira um nome e escolha uma imagem.',
-                textAlign: TextAlign.center,
-              ),
-            ),
-          );
-        }
-      },
-      child: TextoCustomizado(
-        texto: "Cadastrar usuário",
-        tamanhoFonte: Responsividade.ehCelular(context) ? 18.0 : 24.0,
-      ),
-    );
+            backgroundColor: CoresCustomizadas.amarelo,
+          ),
+          onPressed: () {
+            if (imagem != null && nome.isNotEmpty) {
+              salvarDadosComImagem(nome, imagem!);
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(
+                  'Aluno cadastrado com sucesso!',
+                  textAlign: TextAlign.center,
+                ),
+              ));
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'Por favor, insira um nome e escolha uma imagem.',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              );
+            }
+          },
+          child: TextoCustomizado(
+            texto: "Cadastrar usuário",
+            tamanhoFonte: Responsividade.ehCelular(context) ? 18.0 : 24.0,
+          ),
+        ));
   }
 
   Widget botaoPegarImagem() {
-    return ElevatedButton(
+    return SizedBox(
+      width: Responsividade.ehCelular(context)
+            ? MediaQuery.of(context).size.width * 0.3 // Largura para celular
+            : MediaQuery.of(context).size.width *
+                0.2, // Largura para outras telas
+        child: ElevatedButton(
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.symmetric(
-          vertical: Responsividade.ehCelular(context) ? 12.0 : 20.0,
-          horizontal: Responsividade.ehCelular(context) ? 8.0 : 16.0,
+          vertical: Responsividade.ehCelular(context) ? 6.0 : 20.0,
         ),
         backgroundColor: CoresCustomizadas.amarelo,
       ),
@@ -227,7 +260,7 @@ class TelaCadastroState extends State<TelaCadastro> {
         texto: "Escolher imagem",
         tamanhoFonte: Responsividade.ehCelular(context) ? 18.0 : 24.0,
       ),
-    );
+    ));
   }
 
   Widget preview(Uint8List? imagem, String texto) {
@@ -263,7 +296,10 @@ class TelaCadastroState extends State<TelaCadastro> {
     });
 
     // Atualiza o documento para incluir o ID gerado automaticamente
-    await FirebaseFirestore.instance.collection('alunos').doc(docRef.id).update({
+    await FirebaseFirestore.instance
+        .collection('alunos')
+        .doc(docRef.id)
+        .update({
       'id': docRef.id, // Adiciona o ID gerado automaticamente como um campo
     });
   }

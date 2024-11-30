@@ -8,4 +8,5 @@ class CoresCustomizadas {
   static const Color azulEscuro = Color.fromARGB(255, 24, 113, 185);
   static const Color cinzaClaro = Color.fromARGB(255, 224, 224, 224);
   static const Color vermelho = Color.fromARGB(255, 255, 0, 0);
+  static const Color transparente = Color.fromARGB(0, 255, 255, 255);
 }

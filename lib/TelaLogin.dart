@@ -82,34 +82,44 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double alturaToolbar = Responsividade.ehCelular(context) ? 60 : 120;
-    return Scaffold(
-      backgroundColor: CoresCustomizadas.azul,
-      appBar: AppBar(
-        backgroundColor: CoresCustomizadas.azul,
-        toolbarHeight: alturaToolbar,
-        title: TextoCustomizado(texto: "Bem-vindo, professor(a)!", tamanhoFonte: 48.0),
-        centerTitle: true,
-        actions: [Padding(
+  double fonte = Responsividade.ehCelular(context) ? 30 : 48;
+  double alturaToolbar = Responsividade.ehCelular(context) ? 60 : 120;
+
+  return Scaffold(
+    backgroundColor: CoresCustomizadas.azul,
+    resizeToAvoidBottomInset: true, // Adicionado para evitar sobreposição do teclado
+    appBar: AppBar(
+      backgroundColor: CoresCustomizadas.transparente,
+      toolbarHeight: alturaToolbar,
+      leadingWidth: 120,
+      title: TextoCustomizado(
+        texto: "Bem-vindo, professor(a)!",
+        tamanhoFonte: fonte,
+      ),
+      centerTitle: true,
+      actions: [
+        Padding(
           padding: EdgeInsets.only(right: 16.0),
           child: BotaoAnimado(
-                  svgPath: NomesPath.cancelar,
-                  corBotao: CoresCustomizadas.amarelo,
-                  corSombra: CoresCustomizadas.amareloSombra,
-                  operacaoBotao: FuncaoBotao.telaMenuInicial,
-                  escalaTamanho: 0.075,
-                ),
-        )],
-      ),
-      body: Center(
+            svgPath: NomesPath.cancelar,
+            corBotao: CoresCustomizadas.amarelo,
+            corSombra: CoresCustomizadas.amareloSombra,
+            operacaoBotao: FuncaoBotao.telaMenuInicial,
+            escalaTamanho: 0.075,
+          ),
+        ),
+      ],
+    ),
+    body: SafeArea(
+      child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Form(
             key: _formKey,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,             
               children: <Widget>[
-                if (!Responsividade.ehCelular(context)) // remove a imagem na resolucao de celular
+                if (!Responsividade.ehCelular(context))
                   ClipOval(
                     child: Image.asset(
                       'assets/logoSemeador.png',
@@ -118,14 +128,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 if (!Responsividade.ehCelular(context)) SizedBox(height: 40),
-                _buildLoginForm(context),
+                Center(                
+                  child: ConstrainedBox(constraints: BoxConstraints(maxWidth: 400),
+                  child: Column(         
+                    children: [_buildLoginForm(context),],
+                  ),),
+                )
               ],
             ),
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   // form de login
 

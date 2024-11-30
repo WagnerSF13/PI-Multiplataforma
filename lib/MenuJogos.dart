@@ -12,10 +12,10 @@ class MenuJogos extends StatelessWidget {
   final List<Widget> cartoesJogos = [];
   @override
   Widget build(BuildContext context) {
-    cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.abelha, operacaoBotao: FuncaoBotao.telaJogoMetadinha, texto: "Metadinha"));
-    cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.escondido, operacaoBotao: FuncaoBotao.telaJogoMemoria, texto: "Memória"));
-    cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.cachorro, operacaoBotao: FuncaoBotao.telaJogoQuebraCabeca, texto: "Cabeça"));
-    cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.tigre, operacaoBotao: FuncaoBotao.telaJogoAdvinha, texto: "Adivinha"));
+    cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.metadinha, operacaoBotao: FuncaoBotao.telaJogoMetadinha, texto: "Metadinha"));
+    cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.memoria, operacaoBotao: FuncaoBotao.telaJogoMemoria, texto: "Memória"));
+    cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.cabeca, operacaoBotao: FuncaoBotao.telaJogoQuebraCabeca, texto: "Cabeça"));
+    cartoesJogos.add(CardResponsivo(imagemPath: NomesPath.adivinha, operacaoBotao: FuncaoBotao.telaJogoAdvinha, texto: "Adivinha"));
     double alturaToolbar = Responsividade.ehCelular(context) ? 60 : 120;
     
     return MaterialApp(
@@ -24,9 +24,24 @@ class MenuJogos extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: CoresCustomizadas.azul,
           toolbarHeight: alturaToolbar,
+          leadingWidth: 120,
           title:
               TextoCustomizado(texto: "Escolha um Jogo", tamanhoFonte: 48.0),
           centerTitle: true,
+          leading: Padding(
+          padding: EdgeInsets.only(left: 8.0), // Espaçamento à esquerda
+          child: SizedBox(
+            width: 56.0, // Largura padrão para o espaço do leading
+            height: 56.0, // Altura padrão para o espaço do leading
+            child: BotaoAnimado(
+              svgPath: NomesPath.voltar,
+              corBotao: CoresCustomizadas.amarelo,
+              corSombra: CoresCustomizadas.amareloSombra,
+              operacaoBotao: FuncaoBotao.telaMenuPerfil,
+              escalaTamanho: 0.075,
+            ),
+          ),
+        ),
           actions: [
             Align(
               alignment: Alignment.centerRight, // botão à direita

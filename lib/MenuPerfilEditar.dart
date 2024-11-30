@@ -38,11 +38,26 @@ class MenuPerfilEditar extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: CoresCustomizadas.azul,
         toolbarHeight: alturaToolbar,
+        leadingWidth: 120,
         title: TextoCustomizado(
           texto: "Escolha o Perfil",
           tamanhoFonte: 48.0,
         ),
         centerTitle: true,
+        leading: Padding(
+          padding: EdgeInsets.only(left: 8.0), // Espaçamento à esquerda
+          child: SizedBox(
+            width: 56.0, // Largura padrão para o espaço do leading
+            height: 56.0, // Altura padrão para o espaço do leading
+            child: BotaoAnimado(
+              svgPath: NomesPath.voltar,
+              corBotao: CoresCustomizadas.amarelo,
+              corSombra: CoresCustomizadas.amareloSombra,
+              operacaoBotao: FuncaoBotao.telaCadastro,
+              escalaTamanho: 0.075,
+            ),
+          ),
+        ),
         actions: [
           Align(
             alignment: Alignment.centerRight, // botão à direita

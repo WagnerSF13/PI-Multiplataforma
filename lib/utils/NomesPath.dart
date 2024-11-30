@@ -20,6 +20,12 @@ class NomesPath {
 
   static const String escondido = "assets/interrogacao.png";
 
+  //Icones dos jogos
+  static const String metadinha = "assets/metadinha.png";
+  static const String memoria = "assets/memoria.png";
+  static const String cabeca = "assets/cabeca.png";
+  static const String adivinha = "assets/adivinha.png";
+
   //Imagens
   // Codigo gerado automaticamente pelo script Python imagem.py
   static const String abelha = "assets/ImagensDosJogos/abelha.png";

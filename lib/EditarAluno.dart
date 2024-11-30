@@ -40,8 +40,35 @@ class TelaEditarAlunoState extends State<EditarAluno> {
   @override
   void initState() {
     super.initState();
-    
+    nome = widget.nomeInicial ??
+        ""; // Inicializa com o nome inicial, se disponível
+    if (widget.imagemBase64Inicial != null &&
+        widget.imagemBase64Inicial!.isNotEmpty) {
+      imagem = base64Decode(
+          widget.imagemBase64Inicial!); // Decodifica a imagem inicial
+    } else {
+      // Busca os dados do Firebase se não foram fornecidos
+      FirebaseFirestore.instance
+          .collection('alunos')
+          .doc(widget.alunoId)
+          .get()
+          .then((snapshot) {
+        if (snapshot.exists) {
+          setState(() {
+            nome = snapshot.data()?['nome'] ?? "Sem Nome";
+            String? imagemBase64 = snapshot.data()?['imagemBase64'];
+            if (imagemBase64 != null && imagemBase64.isNotEmpty) {
+              imagem = base64Decode(imagemBase64);
+            }
+          });
+        }
+      }).catchError((error) {
+        // Adicione lógica para lidar com erros, se necessário
+        print("Erro ao buscar os dados do aluno: $error");
+      });
+    }
   }
+
   Widget build(BuildContext context) {
     final double largura = MediaQuery.of(context).size.width;
     final double pad = Responsividade.ehCelular(context) ? 5 : 10;
@@ -49,13 +76,28 @@ class TelaEditarAlunoState extends State<EditarAluno> {
     return Scaffold(
       backgroundColor: CoresCustomizadas.azul,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: CoresCustomizadas.transparente,
         toolbarHeight: alturaToolbar,
+        leadingWidth: 120,
         title: TextoCustomizado(
-          texto: "Cadastro",
+          texto: "Editar",
           tamanhoFonte: Responsividade.ehCelular(context) ? 36.0 : 48.0,
         ),
         centerTitle: true,
+        leading: Padding(
+          padding: EdgeInsets.only(left: 8.0), // Espaçamento à esquerda
+          child: SizedBox(
+            width: 56.0, // Largura padrão para o espaço do leading
+            height: 56.0, // Altura padrão para o espaço do leading
+            child: BotaoAnimado(
+              svgPath: NomesPath.voltar,
+              corBotao: CoresCustomizadas.amarelo,
+              corSombra: CoresCustomizadas.amareloSombra,
+              operacaoBotao: FuncaoBotao.telaPerfilEditar,
+              escalaTamanho: 0.075,
+            ),
+          ),
+        ),
         actions: [
           Align(
             alignment: Alignment.centerRight,
@@ -109,7 +151,11 @@ class TelaEditarAlunoState extends State<EditarAluno> {
             Expanded(
               flex: 1,
               child: Center(
-                child: preview(imagem, nome == "" ? "Nome" : nome),
+                child: preview(
+                    imagem,
+                    nome.isNotEmpty
+                        ? nome
+                        : (widget.nomeInicial ?? "Sem Nome")),
               ),
             ),
           ],
@@ -126,7 +172,6 @@ class TelaEditarAlunoState extends State<EditarAluno> {
           nome = novoTexto;
         });
       },
-      
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
         labelText: "Usuário",
@@ -150,81 +195,105 @@ class TelaEditarAlunoState extends State<EditarAluno> {
   }
 
   Widget botaoApagar() {
-    return ElevatedButton(
+    return SizedBox(
+      width: Responsividade.ehCelular(context)
+            ? MediaQuery.of(context).size.width * 0.3 // Largura para celular
+            : MediaQuery.of(context).size.width *
+                0.2, // Largura para outras telas
+        child: ElevatedButton(
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.symmetric(
           vertical: Responsividade.ehCelular(context) ? 12.0 : 20.0,
-          horizontal: Responsividade.ehCelular(context) ? 8.0 : 16.0,
         ),
         backgroundColor: CoresCustomizadas.vermelho,
       ),
       onPressed: () async {
-  await FirebaseFirestore.instance
-      .collection('alunos')
-      .doc(widget.alunoId)
-      .delete();
+        await FirebaseFirestore.instance
+            .collection('alunos')
+            .doc(widget.alunoId)
+            .delete();
 
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    content: Text('Aluno excluído com sucesso!'),
-  ));
-  
-  Navegacao.mudarTela(FuncaoBotao.telaPerfilEditar, context); // Retorna à tela anterior
-},
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Aluno excluído com sucesso!', textAlign: TextAlign.center,),
+        ));
+
+        Navegacao.mudarTela(
+            FuncaoBotao.telaPerfilEditar, context); // Retorna à tela anterior
+      },
       child: TextoCustomizado(
         texto: "Excluir Aluno",
         tamanhoFonte: Responsividade.ehCelular(context) ? 18.0 : 24.0,
       ),
-    );
+    ));
   }
 
   Widget botaoEditar() {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(
-          vertical: Responsividade.ehCelular(context) ? 12.0 : 20.0,
-          horizontal: Responsividade.ehCelular(context) ? 8.0 : 16.0,
-        ),
-        backgroundColor: CoresCustomizadas.amarelo,
-      ),
-      onPressed: alterado ? () async {
-        if (imagem != null && nome.isNotEmpty) {
-          await FirebaseFirestore.instance
-              .collection('alunos')
-              .doc(widget.alunoId)
-              .update({
-            'nome': nome,
-            'imagemBase64': base64Encode(imagem!),
-          });
-
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('Aluno editado com sucesso!'),
-          ));
-          Navegacao.mudarTela(FuncaoBotao.telaPerfilEditar, context); // Retorna à tela anterior
+    return SizedBox(
+        width: Responsividade.ehCelular(context)
+            ? MediaQuery.of(context).size.width * 0.3 // Largura para celular
+            : MediaQuery.of(context).size.width *
+                0.2, // Largura para outras telas
+        child: ElevatedButton(
+          style: ButtonStyle(
+    backgroundColor: WidgetStateProperty.resolveWith<Color>(
+      (Set<WidgetState> states) {
+        if (states.contains(WidgetState.disabled)) {
+          return CoresCustomizadas.amarelo; // Cor para estado desabilitado
         }
-      }
-    : null,
-      child: TextoCustomizado(
-        texto: "Confirmar",
-        tamanhoFonte: Responsividade.ehCelular(context) ? 18.0 : 24.0,
+        return CoresCustomizadas.amarelo; // Cor padrão
+      },
+    ),
+    padding: WidgetStateProperty.all(
+      EdgeInsets.symmetric(
+        vertical: Responsividade.ehCelular(context) ? 12.0 : 20.0,
       ),
-    );
+    ),
+  ),
+          onPressed: alterado
+              ? () async {
+                  if (imagem != null && nome.isNotEmpty) {
+                    await FirebaseFirestore.instance
+                        .collection('alunos')
+                        .doc(widget.alunoId)
+                        .update({
+                      'nome': nome,
+                      'imagemBase64': base64Encode(imagem!),
+                    });
+
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text('Aluno editado com sucesso!', textAlign: TextAlign.center,),
+                    ));
+                    Navegacao.mudarTela(FuncaoBotao.telaPerfilEditar,
+                        context); // Retorna à tela anterior
+                  }
+                }
+              : null,
+          child: TextoCustomizado(
+            texto: "Confirmar",
+            tamanhoFonte: Responsividade.ehCelular(context) ? 18.0 : 24.0,
+          ),
+        ));
   }
 
   Widget botaoPegarImagem() {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(
-          vertical: Responsividade.ehCelular(context) ? 12.0 : 20.0,
-          horizontal: Responsividade.ehCelular(context) ? 8.0 : 16.0,
-        ),
-        backgroundColor: CoresCustomizadas.amarelo,
-      ),
-      onPressed: pegarImagem,
-      child: TextoCustomizado(
-        texto: "Escolher imagem",
-        tamanhoFonte: Responsividade.ehCelular(context) ? 18.0 : 24.0,
-      ),
-    );
+    return SizedBox(
+        width: Responsividade.ehCelular(context)
+            ? MediaQuery.of(context).size.width * 0.3 // Largura para celular
+            : MediaQuery.of(context).size.width *
+                0.2, // Largura para outras telas
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.symmetric(
+              vertical: Responsividade.ehCelular(context) ? 12.0 : 20.0,
+            ),
+            backgroundColor: CoresCustomizadas.amarelo,
+          ),
+          onPressed: pegarImagem,
+          child: TextoCustomizado(
+            texto: "Escolher imagem",
+            tamanhoFonte: Responsividade.ehCelular(context) ? 18.0 : 24.0,
+          ),
+        ));
   }
 
   Widget preview(Uint8List? imagem, String texto) {
@@ -238,12 +307,17 @@ class TelaEditarAlunoState extends State<EditarAluno> {
           Expanded(
             flex: 3,
             child: imagem == null
-                ? Image.asset(NomesPath.escondido)
-                : Image.memory(imagem),
+                ? Image.asset(NomesPath.escondido) // Placeholder
+                : Image.memory(imagem), // Exibe a imagem do aluno
           ),
           Expanded(
             flex: 1,
-            child: FittedBox(child: TextoCustomizado(texto: texto)),
+            child: FittedBox(
+              child: TextoCustomizado(
+                  texto: texto.isNotEmpty
+                      ? texto
+                      : "Sem Nome"), // Exibe o nome ou um padrão
+            ),
           ),
         ],
       ),
