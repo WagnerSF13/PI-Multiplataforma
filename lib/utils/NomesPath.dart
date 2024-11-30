@@ -233,6 +233,19 @@ static const String zebraBaixo = "assets/ImagensDosJogos/zebraBaixo.png";
 static const String zebraCerto = "assets/ImagensDosJogos/zebraCerto.png";
 static const List<String> zebraGrupo = [zebra, zebraCima, zebraBaixo, zebraCerto];
 
+// Codigo gerado automaticamente pelo script Python imagem.py
+static const String colher = "assets/ImagensDosJogos/colher.png";
+static const String colherCima = "assets/ImagensDosJogos/colherCima.png";
+static const String colherBaixo = "assets/ImagensDosJogos/colherBaixo.png";
+static const String colherCerto = "assets/ImagensDosJogos/colherCerto.png";
+static const List<String> colherGrupo = [colher, colherCima, colherBaixo, colherCerto];
+
+// Codigo gerado automaticamente pelo script Python imagem.py
+static const String relogio = "assets/ImagensDosJogos/relogio.png";
+static const String relogioCima = "assets/ImagensDosJogos/relogioCima.png";
+static const String relogioBaixo = "assets/ImagensDosJogos/relogioBaixo.png";
+static const String relogioCerto = "assets/ImagensDosJogos/relogioCerto.png";
+static const List<String> relogioGrupo = [relogio, relogioCima, relogioBaixo, relogioCerto];
 
   static const List<List<String>> frutasImagens = [
     cerejaGrupo,
@@ -260,7 +273,9 @@ static const List<String> zebraGrupo = [zebra, zebraCima, zebraBaixo, zebraCerto
     livroGrupo,
     mesaGrupo,
     lapisGrupo,
-    ventiladorGrupo
+    ventiladorGrupo,
+    relogioGrupo,
+    colherGrupo
     ];
 
   static const List<List<String>> todasImagens = [
