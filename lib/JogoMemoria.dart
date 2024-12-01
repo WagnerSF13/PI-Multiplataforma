@@ -115,68 +115,96 @@ class JogoMemoriaState extends State<JogoMemoria> {
 
   int cliques = 0;
   @override
-  Widget build(BuildContext context) {
-    double alturaToolbar = Responsividade.ehCelular(context) ? 60 : 120;
+Widget build(BuildContext context) {
+  double larguraTela = MediaQuery.of(context).size.width;
+  double alturaTela = MediaQuery.of(context).size.height;
 
-    return MaterialApp(
-      home: Scaffold(
-          appBar: AppBar(
-            toolbarHeight: alturaToolbar,
-            title: TextoCustomizado(
-              texto: "Jogo da Memória",
-              tamanhoFonte: 48.0,
+  double alturaDisponivel =
+      alturaTela - AppBar().preferredSize.height - MediaQuery.of(context).padding.top - 16;
+
+  double espacoEntreCartoes = Responsividade.ehCelular(context) ? 20 : 8;
+
+  double larguraCard = (larguraTela - (tamanhoColuna - 1) * espacoEntreCartoes) / tamanhoColuna;
+  double alturaCard = (alturaDisponivel - (tamanhoLinha - 1) * espacoEntreCartoes) / tamanhoLinha;
+
+  double tamanhoCard = larguraCard < alturaCard ? larguraCard : alturaCard;
+
+  return MaterialApp(
+    home: Scaffold(
+      appBar: AppBar(
+        toolbarHeight: Responsividade.ehCelular(context) ? 60 : 120,
+        title: TextoCustomizado(
+          texto: "Jogo da Memória",
+          tamanhoFonte: Responsividade.ehCelular(context) ? 30 : 48,
+        ),
+        centerTitle: true,
+        actions: [
+          Align(
+            alignment: Alignment.centerRight,
+            child: Padding(
+              padding: EdgeInsets.only(right: 16.0),
+              child: BotaoAnimado(
+                svgPath: NomesPath.cancelar,
+                corBotao: CoresCustomizadas.amarelo,
+                corSombra: CoresCustomizadas.amareloSombra,
+                operacaoBotao: FuncaoBotao.telaMenuJogos,
+                escalaTamanho: 0.075,
+              ),
             ),
-            centerTitle: true,
-            actions: [
-              Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: EdgeInsets.only(right: 16.0),
-                  child: BotaoAnimado(
-                    svgPath: NomesPath.cancelar,
-                    corBotao: CoresCustomizadas.amarelo,
-                    corSombra: CoresCustomizadas.amareloSombra,
-                    operacaoBotao: FuncaoBotao.telaMenuJogos,
-                    escalaTamanho: 0.075,
-                  ),
-                ),
-              ),
-            ],
           ),
-          body: Stack(
-            children: [
-              ImagemFundo(imagem: NomesPath.fundoEscondido),
-              GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: tamanhoColuna),
-                itemCount: tamanhoLinha * tamanhoColuna,
-                itemBuilder: (context, index) {
-                  int linha = index ~/ tamanhoColuna;
-                  int coluna = index % tamanhoColuna;
-                  return GestureDetector(
-                      onTap: () => clicouCarta(linha, coluna),
-                      child: Card(
-                        color: veficiarErro(linha, coluna)
-                            ? Colors.red
-                            : verificaCerto(linha, coluna)
-                                ? Colors.green
-                                : CoresCustomizadas.azul, // cor da carta
-                        child: Center(
-                            child: listaCartas[linha][coluna] ==
-                                    NomesPath.escondido
-                                ? // coloca a imagem da carta
-                                Image.asset(NomesPath.escondido,
-                                    fit: BoxFit.cover)
-                                : Image.asset(listaImagens[linha][coluna],
-                                    fit: BoxFit.cover)),
-                      ));
-                },
+        ],
+      ),
+      body: Stack(
+        children: [
+          ImagemFundo(imagem: NomesPath.fundoEscondido),
+          Center(
+            child: GridView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.all(8),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: tamanhoColuna,
+                childAspectRatio: 1,
+                crossAxisSpacing: espacoEntreCartoes,
+                mainAxisSpacing: espacoEntreCartoes,
               ),
-            ],
-          )),
-    );
-  }
-
+              itemCount: tamanhoLinha * tamanhoColuna,
+              itemBuilder: (context, index) {
+                int linha = index ~/ tamanhoColuna;
+                int coluna = index % tamanhoColuna;
+                return GestureDetector(
+                  onTap: () => clicouCarta(linha, coluna),
+                  child: SizedBox(
+                    width: tamanhoCard,
+                    height: tamanhoCard,
+                    child: Card(
+                      color: veficiarErro(linha, coluna)
+                          ? Colors.red
+                          : verificaCerto(linha, coluna)
+                              ? Colors.green
+                              : CoresCustomizadas.azul, // cor da carta
+                      child: Center(
+                        child: listaCartas[linha][coluna] == NomesPath.escondido
+                            ? // coloca a imagem da carta
+                            Image.asset(
+                                NomesPath.escondido,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.asset(
+                                listaImagens[linha][coluna],
+                                fit: BoxFit.cover,
+                              ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
   // Verifica se virou duas cartas iguais. Retorna true caso errou
   bool veficiarErro(int linha, int coluna) {
     if (ultimaCarta.length == 4) {
