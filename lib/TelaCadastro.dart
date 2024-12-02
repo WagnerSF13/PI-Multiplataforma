@@ -87,30 +87,50 @@ class TelaCadastroState extends State<TelaCadastro> {
                       child: usuarioForm(),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: pad),
-                    child: botaoPegarImagem(),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: pad),
-                    child: botaoCadastrar(),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: pad),
-                    child: TextoCustomizado(
-                      texto: "Ou...",
-                      tamanhoFonte:
-                          Responsividade.ehCelular(context) ? 18.0 : 24.0,
+                  SizedBox(
+                    width: 600,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: pad),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: pad),
+                                    child: botaoPegarImagem(),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: pad),
+                                    child: botaoCadastrar(),
+                                  ),
+                                ],
+                              )),
+                        ),
+                        Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: pad),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: pad),
+                                    child: botaoCadastroProfessor(),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: pad),
+                                    child: botaoEditarAluno(),
+                                  ),
+                                ],
+                              )),)
+                      ],
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: pad),
-                    child: botaoCadastroProfessor(),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: pad),
-                    child: botaoEditarAluno(),
-                  ),
+                  )
                 ],
               ),
             ),
@@ -241,23 +261,23 @@ class TelaCadastroState extends State<TelaCadastro> {
 
   Widget botaoPegarImagem() {
     return SizedBox(
-      width: Responsividade.ehCelular(context)
+        width: Responsividade.ehCelular(context)
             ? MediaQuery.of(context).size.width * 0.3 // Largura para celular
             : MediaQuery.of(context).size.width *
                 0.2, // Largura para outras telas
         child: ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(
-          vertical: Responsividade.ehCelular(context) ? 6.0 : 20.0,
-        ),
-        backgroundColor: CoresCustomizadas.amarelo,
-      ),
-      onPressed: pegarImagem,
-      child: TextoCustomizado(
-        texto: "Escolher imagem",
-        tamanhoFonte: Responsividade.ehCelular(context) ? 18.0 : 24.0,
-      ),
-    ));
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.symmetric(
+              vertical: Responsividade.ehCelular(context) ? 6.0 : 20.0,
+            ),
+            backgroundColor: CoresCustomizadas.amarelo,
+          ),
+          onPressed: pegarImagem,
+          child: TextoCustomizado(
+            texto: "Escolher imagem",
+            tamanhoFonte: Responsividade.ehCelular(context) ? 18.0 : 24.0,
+          ),
+        ));
   }
 
   Widget preview(Uint8List? imagem, String texto) {
