@@ -132,6 +132,7 @@ Widget build(BuildContext context) {
   return MaterialApp(
     home: Scaffold(
       appBar: AppBar(
+        backgroundColor: CoresCustomizadas.transparente,
         toolbarHeight: Responsividade.ehCelular(context) ? 60 : 120,
         title: TextoCustomizado(
           texto: "Jogo da Memória",

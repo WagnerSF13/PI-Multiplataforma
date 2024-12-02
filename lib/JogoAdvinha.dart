@@ -99,7 +99,7 @@ class _JogoAdvinhaState extends State<JogoAdvinha> {
         backgroundColor: CoresCustomizadas.azul,
         appBar: AppBar(
           toolbarHeight: alturaToolbar,
-          backgroundColor: CoresCustomizadas.azul,
+          backgroundColor: CoresCustomizadas.transparente,
           actions: [
             Align(
               alignment: Alignment.centerRight,
@@ -116,7 +116,7 @@ class _JogoAdvinhaState extends State<JogoAdvinha> {
             ),
           ],
           title: TextoCustomizado(
-            texto: "Jogo da Memória",
+            texto: "Adivinha",
             tamanhoFonte: 48.0,
           ),
           centerTitle: true,
@@ -156,7 +156,7 @@ class _JogoAdvinhaState extends State<JogoAdvinha> {
                     },
                     child: Container(
                       margin: EdgeInsets.symmetric(vertical: 8),
-                      padding: EdgeInsets.all(12),
+                      padding: EdgeInsets.only(top: 4),
                       color: opcoesSelecionadas.contains(opcao)
                           ? (opcao == imagemPergunta
                               ? Colors.green
