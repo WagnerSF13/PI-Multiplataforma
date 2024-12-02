@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:semeador/MenuInicial.dart';
 import 'package:flutter/services.dart';
-import 'package:semeador/TelaCadastro.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 import 'firebase_options.dart';
-import 'package:semeador/TelaLogin.dart';
+
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();

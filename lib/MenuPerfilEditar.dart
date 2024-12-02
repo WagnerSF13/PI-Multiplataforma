@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:semeador/utils/BotaoAnimado.dart';
-import 'package:semeador/utils/CardResponsivo.dart';
 import 'package:semeador/utils/CoresCustomizadas.dart';
 import 'package:semeador/utils/Navegacao.dart';
 import 'package:semeador/utils/NomesPath.dart';
 import 'package:semeador/utils/Responsividade.dart';
 import 'package:semeador/utils/TextoCustomizado.dart';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:convert';
 
 class MenuPerfilEditar extends StatelessWidget {
@@ -24,7 +20,6 @@ class MenuPerfilEditar extends StatelessWidget {
     return querySnapshot.docs.map((doc) {
       final data = doc.data() as Map<String, dynamic>;
       data['id'] = doc.id; // Adiciona o ID do documento ao mapa
-      print(data['id']);
       return data;
     }).toList();
   }

@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:semeador/utils/BotaoAnimado.dart';
-import 'package:semeador/utils/CardResponsivo.dart';
 import 'package:semeador/utils/CoresCustomizadas.dart';
 import 'package:semeador/utils/Navegacao.dart';
 import 'package:semeador/utils/NomesPath.dart';
 import 'package:semeador/utils/Responsividade.dart';
 import 'package:semeador/utils/TextoCustomizado.dart';
-import 'dart:io';
-import 'dart:typed_data';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class TelaLogin extends StatelessWidget {

@@ -123,7 +123,7 @@ class JogoMetadinhaState extends State<JogoMetadinha> {
       child: podeMover[posLista] == false
           ? null
           : Draggable<String>(
-              // Caso ja genha sido encaixada, nao mostrar nada
+              // Caso ja tenha sido encaixada, nao mostrar nada
               data: imagensMoveis[posLista],
               feedback: Image.asset(imagensMoveis[posLista]),
               childWhenDragging: Image.asset(imagensMoveis[posLista]),
@@ -164,7 +164,7 @@ class JogoMetadinhaState extends State<JogoMetadinha> {
         }
       } else {
         // Caso arrastou a imagem errada
-        print("Errou");
+        // print("Errou");
       }
     }, builder: (context, candidateData, rejectedData) {
       return imagemFixa(posLista);

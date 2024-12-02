@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:semeador/utils/BotaoAnimado.dart';
-import 'package:semeador/utils/CardResponsivo.dart';
 import 'package:semeador/utils/CoresCustomizadas.dart';
 import 'package:semeador/utils/Navegacao.dart';
 import 'package:semeador/utils/NomesPath.dart';
 import 'package:semeador/utils/Responsividade.dart';
 import 'package:semeador/utils/TextoCustomizado.dart';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:convert';
 
 class EditarAluno extends StatefulWidget {
@@ -32,7 +29,7 @@ class EditarAluno extends StatefulWidget {
 }
 
 class TelaEditarAlunoState extends State<EditarAluno> {
-  bool alterado = false; // Indica se algo foi alterado
+  bool alterado = false;
   Uint8List? imagem;
   final ImagePicker imagePicker = ImagePicker();
   String nome = "";
@@ -41,7 +38,7 @@ class TelaEditarAlunoState extends State<EditarAluno> {
   void initState() {
     super.initState();
     nome = widget.nomeInicial ??
-        ""; // Inicializa com o nome inicial, se disponível
+        ""; // Inicializa com o nome inicial
     if (widget.imagemBase64Inicial != null &&
         widget.imagemBase64Inicial!.isNotEmpty) {
       imagem = base64Decode(
@@ -63,8 +60,7 @@ class TelaEditarAlunoState extends State<EditarAluno> {
           });
         }
       }).catchError((error) {
-        // Adicione lógica para lidar com erros, se necessário
-        print("Erro ao buscar os dados do aluno: $error");
+        // print("Erro ao buscar os dados do aluno: $error");
       });
     }
   }
