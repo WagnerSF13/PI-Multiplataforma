@@ -57,17 +57,31 @@ class MenuPerfil extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
               return Center(
-                child: TextoCustomizado(
+                child: Column(
+                  children: [
+                    TextoCustomizado(
                   texto: "Erro ao carregar perfis.",
-                  tamanhoFonte: 34.0,
-                ),
+                  tamanhoFonte: 34.0,),
+                    TextoCustomizado(
+                  texto: "Jogue como convidado ou tente novamente.",
+                  tamanhoFonte: 34.0,),
+                    BotaoAnimado(svgPath: NomesPath.play, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra, operacaoBotao: FuncaoBotao.telaMenuJogos),
+                  ],
+                )
               );
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const Center(
-                child: TextoCustomizado(
-                  texto: "Nenhum perfil encontrado.",
-                  tamanhoFonte: 34.0,
-                ),
+              return Center(
+                child: Column(
+                  children: [
+                    TextoCustomizado(
+                    texto: "Nenhum perfil encontrado.",
+                    tamanhoFonte: 34.0,),
+                    TextoCustomizado(
+                  texto: "Jogue como convidado ou crie uma conta.",
+                  tamanhoFonte: 34.0,),
+                    BotaoAnimado(svgPath: NomesPath.play, corBotao: CoresCustomizadas.amarelo, corSombra: CoresCustomizadas.amareloSombra, operacaoBotao: FuncaoBotao.telaMenuJogos),
+                  ],
+                )
               );
             }
 
